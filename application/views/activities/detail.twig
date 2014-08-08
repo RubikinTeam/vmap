@@ -1,0 +1,278 @@
+{% extends "_templates/home_base.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ constant('URL') }}public/js/application/activity.js"></script>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&appId=576254322458716&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function text(comment) {
+            if (comment.length > 0) {
+                $('#submit').show().fadeIn();
+            }
+            else {
+                $('#submit').hide().fadeOut();
+            }
+        }
+
+        function addComment() {
+            var id = {{ activity.id }};
+            var comment = '"' + $('#comment').val() + '"';
+            {% if userLogged == 0 %}
+            var name = $('#commenter').val();
+            var office = $('#office').val();
+            {% else %}
+            var name = "{{ userLogged.fname ~ ' ' ~ userLogged.lname }}";
+            var office = "{{ userLogged.office }}";
+            {% endif %}
+            $.post("{{ constant('URL') }}activities/addComment",
+                    {
+                        id: id,
+                        comment: comment,
+                        name: name,
+                        office: office
+                    }
+            ).done(function () {
+                        $('#comment').val('');
+                        $('#submit').hide().fadeOut();
+                        getComments(id);
+                        var tab = $('#tab_2');
+                        var nComments = tab.data('value');
+                        $('#stat_2').html('<i class="icon-star"></i>Trực tiếp (' + nComments + ')');
+                    }
+            );
+        }
+
+        function getComments(id) {
+            $.post("{{ constant('URL') }}/activities/getComments", {id: id},
+                    function (data) {
+                        $(".listComments").html(data);
+                        var tab = $('#tab_2');
+                        var nComments = tab.data('value');
+                        $('#stat_2').html('<i class="icon-star"></i>Trực tiếp (' + nComments + ')');
+                    })
+        }
+
+        /*setInterval(function () {
+         var tab = $('#_tab_2');
+         var id = tab.data('value');
+         var type = tab.data('role');
+         getComments(id, type);
+         }, 3000);*/
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="main-content clearfix">
+        <nav class="breadcrumbs small">
+            <ul>
+                <li><a href="{{ constant('URL') }}home"><i class="icon-home"></i></a></li>
+                <li><a href="{{ constant('URL') }}activities">Hoạt động</a></li>
+            </ul>
+        </nav>
+        <div class="grid">
+            <div class="row">
+                <div class="span9">
+                    <p style="color: #93a1a1">
+                        <span><strong>{{ activity.createDate|date('d/m/Y h:i') }}</strong></span>
+                        <a target="_blank" title="Chia sẻ hoạt động này qua FaceBook"
+                           href="{{ 'https://www.facebook.com/sharer/sharer.php?u=' ~ constant('URL') ~ 'activities/detail/' ~ activity.id }}">
+                            <span style="font-size: 18px; float: right">
+                                <i class="icon-facebook fg-white bg-blue"
+                                   style="border: 1px solid #93a1a1; border-radius: 50%; padding: 5px">
+
+                                </i>
+                            </span>
+                        </a>
+                    </p>
+
+                    <div class="tab-control" data-role="tab-control">
+                        <ul class="tabs">
+                            <li class="place-left"><a href="#_info"><i class="icon-info on-left"></i>Thông tin hoạt động</a>
+                            </li>
+                            <li class="place-left"><a href="#_comments"><i class="icon-comments on-left"></i>Bình
+                                    luận</a></li>
+                        </ul>
+                        <div class="frames">
+                            <div class="frame" id="_info">
+                                <style type="text/css">
+                                    #_info ul li p:first-child {
+                                        font-size: 20px;
+                                        color: #00356a;
+                                        font-weight: bold;
+                                    }
+                                    #_info ul li p:nth-child(2) {
+                                        font-size: 16;
+                                        color: #000000;
+                                        font-style: italic;
+                                    }
+                                    #_info ul {
+                                        margin-top: 40px;
+                                    }
+                                    #_info ul li .thumbnail {
+                                        width: 300px;
+                                        height: 200px;
+                                        float: left;
+                                        margin-bottom: 30px;
+                                        margin-right: 20px;
+                                    }
+                                </style>
+                                <h2><strong>{{ activity.name }}</strong></h2>
+                                <ul>
+                                    <li>
+                                        <p>Giới thiệu hoạt động</p>
+                                        <div class="thumbnail"><img src="{{ constant('URL') ~ 'public/img/' ~ activity.imageUrl}}"></div>
+                                        <p style="text-indent: 10px">{{ activity.description }}</p>
+                                    </li>
+                                    <li>
+                                        <p>Đối tượng tình nguyện:</p>
+
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p>Số lượng TNV cần tuyển:</p>
+
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p>Yêu cầu:</p>
+
+                                        <p></p>
+                                    </li>
+                                    <li>
+                                        <p>Thông tin liên hệ:</p>
+
+                                        <p></p>
+                                    </li>
+
+                                </ul>
+                                <div class="margin20"></div>
+                            </div>
+                            <div class="frame" id="_comments">
+                                <div class="tab-control" data-role="tab-control">
+                                    <ul class="tabs">
+                                        <li class="place-right"><a href="#_tab_1"><i class="icon-facebook"></i>Facebook</a>
+                                        </li>
+
+                                        <li class="place-right active"><a href="#_tab_2" id="stat_2"><i
+                                                        class="icon-star"></i>Trực tiếp({{ comments|length }})</a></li>
+                                    </ul>
+                                    <div class="frames">
+                                        <div class="frame" id="_tab_1">
+                                            <div class="fb-comments"
+                                                 data-href="{{ constant('URL') }}activitys/detail/{{ activity.activityId }}"
+                                                 data-width="658" data-numposts="5" data-colorscheme="light"></div>
+                                        </div>
+                                        <div class="frame" id="_tab_2" data-role="1" data-value="{{ activity.id }}">
+                                            <div class="listview-outlook">
+                                                <div class="list">
+                                                    <div class="list-content">
+                                                        <form>
+                                                            <textarea class="list-title place-right" id="comment"
+                                                                      activityholder="Ý kiến của bạn"
+                                                                      onkeyup="text(this.value)"></textarea>
+                                                            {% if userLogged == 0 %}
+                                                                <input type="text" id="commenter"
+                                                                       activityholder="Nhập tên bạn"
+                                                                       required="true" style="margin: 5px">
+                                                                <input type="text" id="office"
+                                                                       activityholder="Đơn vị học tập/công tác"
+                                                                       required="true">
+                                                            {% endif %}
+                                                            <span class="list-subtitle">&nbsp;</span>
+                                                            <input class="place-right" id="submit" type="submit"
+                                                                   onclick="addComment()" value="Gửi"
+                                                                   style="display:none;"/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="listComments">
+                                                    <div id="tab_2" data-value="{{ comments|length }}">
+                                                        {% for comment in comments %}
+                                                            <div class="list" id="c{{ comment.id }}"
+                                                                 style="cursor:default;">
+                                                                <div class="list-content">
+            <span class="list-icon">
+                <img src="{{ constant('URL') }}public/img/avatar.png" class="pull-left">
+            </span>
+            <span class="list-subtitle">
+                <span class="place-right">{{ comment.date }}</span>
+                {{ comment.name ~ ' - ' ~ comment.office }}
+            </span>
+            <span class="list-title">
+                <span class="place-bottom-right">
+                    <a href="" id="l{{ comment.id }}"><i class="icon-thumbs-up"></i></a> . {{ comment.like }}
+                    <a href="" id="d{{ comment.id }}"><i class="icon-thumbs-down"></i></a> . {{ comment.dislike }}
+                </span>
+                {{ comment.content }}
+            </span>
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Activity's content-->
+                    <div class="margin20"></div>
+                </div>
+                <div class="span4">
+                    <div class="panel">
+                        <div class="panel-header">
+                            Thông tin hoạt động
+                        </div>
+                        <div class="panel-content">
+                            <div class="countdown" data-style-background="bg-lightRed" data-role="countdown"
+                                 data-stoptimer="{{ activity.startday }}"></div>
+                            <p><span class="icon-calendar on-left fg-blue"></span>Ngày bắt đầu: {{ activity.startday }}
+                            </p>
+
+                            <p><span class="icon-calendar on-left fg-blue"></span>Ngày kết thúc: {{ activity.endday }}
+                            </p>
+
+                            <p><span class="icon-location on-left fg-blue"></span>Địa điểm: <a
+                                        href="{{ constant('URL') }}map">Xem bản đồ</a></p>
+                            {% if date() < date(activity.startday) %}
+                                <p style="text-align: center">
+                                    <button class="button large primary" id="button-takePart"
+                                            onclick="takePart({% if userLogged != 0 %}{{ userLogged.id }} {% else %} {{ 0 }}{% endif %}, {{ activity.id }})">
+                                        <i class="icon-plus-2 on-left"></i>Đăng kí tham gia
+                                    </button>
+                                </p>
+                            {% else %}
+                                <p style="text-align: center">
+                                    <button class="button large disabled">Hoạt động đã diễn ra</button>
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="margin20"></div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            Hoạt động cùng loại
+                        </div>
+                        <div class="panel-content">
+                            <ul>
+                                {% for activity in otherActivities %}
+                                    <li>
+                                        <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}">{{ activity.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

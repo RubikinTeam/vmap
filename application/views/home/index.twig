@@ -1,0 +1,690 @@
+{% extends "_templates/home_base.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $(".truncate").each(function () {
+                var text = this.innerHTML;
+                if (text.length > 180) {
+                    text = text.substring(0, 180);
+                    text = text.replace(/\w+$/, '');
+                    text += '<a href="#" ' +
+                            'onclick="this.parentNode.innerHTML=' +
+                            'unescape(\'' + escape(this.innerHTML) + '\');return false;">' +
+                            '...<\/a>';
+                    this.innerHTML = text;
+                }
+            })
+        });
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="main-content clearfix">
+    <div class="tile-area no-padding clearfix">
+    <!-- Start first group -->
+    <div class="tile-group no-margin no-padding clearfix" style="width: 100%">
+        <!-- Start main banner -->
+        <div class="banner" style="margin-bottom: 20px">
+            <div class="carousel" id="carousel1" style="width: 100%; height: 100%">
+                <div class="slide">
+                    <img style="width: 1040px" src="{{ constant('URL') }}public/img/banner/1.jpg">
+                </div>
+
+                <div class="slide">
+                    <img style="width: 1040px" src="{{ constant('URL') }}public/img/banner/2.png">
+                </div>
+
+                <div class="slide">
+                    <img style="width: 1040px" src="{{ constant('URL') }}public/img/banner/3.jpg">
+                </div>
+
+                <div class="slide">
+                    <img style="width: 1040px" src="{{ constant('URL') }}public/img/banner/4.jpg">
+                </div>
+
+                <a class="controls left"><i class="icon-arrow-left-3"></i></a>
+                <a class="controls right"><i class="icon-arrow-right-3"></i></a>
+
+                <div class="markers default">
+                    <ul>
+                        <li class=""><a href="javascript:void(0)" data-num="0"></a></li>
+                        <li class="active"><a href="javascript:void(0)" data-num="1"></a></li>
+                        <li class=""><a href="javascript:void(0)" data-num="2"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <script>
+                $(function () {
+                    $("#carousel1").carousel({
+                        auto: true,
+                        period: 3000,
+                        duration: 2000,
+                        effect: 'fade',
+                        markers: {
+                            show: false
+                        }
+                    });
+                })
+            </script>
+        </div>
+        <!-- End main banner -->
+        <div class="tile double quadro-vertical bg-lightGreen ol-transparent" style="float: right; cursor: default">
+            <div>
+                <div class="bg-lighterBlue" style="font-size: 17px; color: #ffffff; border: 2px solid #00356a; text-align: center; margin-top: 5px; padding: 3px;">
+                    <i class="icon-share-3 on-left fg-white"></i>CẢM XÚC TÌNH NGUYỆN
+                </div>
+                {% for entry in newEntries %}
+                    <div style="float: left">
+                        <a style="margin-top: 5px; float: left"
+                           href="{{ constant('URL') ~ 'users/detail/' ~ entry.userId }}"> <img
+                                    src="{{ constant('URL') ~ 'public/img/' ~ entry.imageUrl }}"
+                                    class="cycle polaroid" style="width: 60px; height: 60px;"></a>
+                    </div>
+
+                    <p style="font-size: 13px; margin-left: 65px; color: #ffffff;margin-top: 5px">
+                        <a style="color: whitesmoke; font-size: 17px"
+                           href="{{ constant('URL') ~ 'users/detail/' ~ entry.userId }}"><strong>{{ entry.fullname }}</strong></a></br>
+                        ( {{ entry.office }} )</br>
+                        {{ entry.date|date('H:m') }}</p>
+                    <div class="balloon bottom"
+                         style="margin: 15px; display: block; color: darkblue; padding: 5px; font-style: italic; font-size: 12px">
+                        <a href="{{ constant('URL') ~ 'users/detail/' ~ entry.userId ~ '?tab=entries' }}">{{ '" ' ~ entry.content ~ ' "' }}</a>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="tile quadro double-vertical ol-transparent">
+            <div class="tile-content">
+                <div class="carousel" data-role="carousel" data-height="100%" data-width="100%"
+                     data-controls="false" style="width: 100%; height: 100%;">
+                    <div class="slide" style="left: 0;">
+                        <img src="{{ constant('URL') }}public/img/landscape/03.jpg">
+                    </div>
+                    <div class="slide" style="left: -510px; display: block;">
+                        <img src="{{ constant('URL') }}public/img/landscape/02.jpg">
+                    </div>
+                    <div class="slide" style="left: -510px; display: block;">
+                        <img src="{{ constant('URL') }}public/img/landscape/01.jpg">
+                    </div>
+                    <div class="markers default">
+                        <ul>
+                            <li class="active"><a href="javascript:void(0)" data-num="0"></a></li>
+                            <li class=""><a href="javascript:void(0)" data-num="1"></a></li>
+                            <li class=""><a href="javascript:void(0)" data-num="2"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tile bg-lightBlue ol-transparent">
+            <div class="tile-content icon">
+                <a href="{{ constant('URL') }}map"><span class="icon-search"></span></a>
+            </div>
+        </div>
+        <div class="tile bg-orange ol-transparent">
+            <div class="tile-content icon">
+                <a href="{{ constant('URL') }}articles"><span class="icon-newspaper"></span></a>
+            </div>
+        </div>
+        <div class="tile ol-transparent bg-teal">
+            <div class="tile-content icon">
+                <a href="{{ constant('URL') }}places"><span class="icon-location"></span></a>
+            </div>
+        </div>
+        <div class="tile ol-transparent bg-green">
+            <div class="tile-content icon">
+                <a href="{{ constant('URL') }}activities"><span class="icon-share-2"></span></a>
+            </div>
+        </div>
+
+        <!-- Show some activities -->
+        <div class="tile triple double-vertical ol-transparent bg-white" data-role="live"
+             data-effect="slideDown">
+            {% for activity in activities %}
+                <div class="tile-content activity">
+                    <div class="panel no-border">
+                        <div class="panel-header bg-darkRed fg-white">
+                            <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                               style="color:white; font-size:20px;">
+                                {{ activity.name }}
+                            </a>
+                        </div>
+                        <div class="panel-content fg-dark nlp nrp">
+                            <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                 class="place-left margin10 nlm ntm size2">
+
+                            <div class="truncate">{{ activity.description }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- End show some activities -->
+        <!-- Show some articles -->
+        <div class="tile triple double-vertical ol-transparent bg-white" data-role="live"
+             data-effect="slideRight">
+            {% for article in newArticles %}
+                <div class="tile-content article">
+                    <div class="panel no-border">
+                        <div class="panel-header bg-darkRed fg-white">
+                            <a href="{{ constant('URL') }}newArticles/detail/{{ article.id }}"
+                               style="color:white; font-size:20px;">
+                                {{ article.title }}
+                            </a>
+                        </div>
+                        <div class="panel-content fg-dark nlp nrp">
+                            <img src="{{ constant('URL') }}public/img/{{ article.imageUrl }}"
+                                 class="place-left margin10 nlm ntm size2">
+
+                            <div class="truncate">{{ article.sumary }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- End show some articles -->
+    </div>
+    <!-- End first group -->
+    <!--Start news group -->
+    <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
+        <a href="{{ constant('URL') ~ 'places' }}"><span style="padding-left: 10px" class="tile-group-title fg-dark"><i
+                        class="icon-newspaper on-left"></i>TIN TỨC <span
+                        class="icon-arrow-right-5"></span></span></a>
+
+        <div class="tab-control-2" data-role="tab-control">
+            <ul class="tabs">
+                <li class="active"><a href="#_new_articles"><i class="icon-feed on-left-more"></i>&nbsp;Tin mới</a></li>
+                <li><a href="#_hot_articles"><i class="icon-stats-up on-left-more"></i>&nbsp;Được quan tâm</a></li>
+                <li><a href="#_events"><i class="icon-star on-left-more"></i>&nbsp;Theo dòng sự kiện</a></li>
+            </ul>
+            <div class="frames" style="border: none; background: none">
+                <div class="frame" id="_new_articles">
+                    {% for article in newArticles %}
+                        <div style="float: left; width: 325px; height: 170px; margin-right: 5px; margin-bottom: 5px; border: 1px solid whitesmoke">
+                            <a href="{{ constant('URL') ~'articles/detail/' ~ article.id }}">
+                                <p style="font-size: 18px; color: #000000; margin: 2px">
+                                    <strong>{{ article.title|length > 60?article.title|slice(0, 60)~'...':article.title }}</strong>
+                                    {% if article.commentTotal>0 %}
+                                        <span style="color: #9a1616; font-size: 16px">
+                                            <span style="font-size: 20px" class="icon-comments-2"></span>
+                                            {{ article.commentTotal }}
+                                        </span>
+                                    {% endif %}
+                                </p>
+                            </a>
+
+                            <div style="float: left">
+                                <img style="width: 90px; height: 90px"
+                                     src="{{ constant('URL') ~'public/img/' ~ article.imageUrl }}">
+                            </div>
+                            <div style="font-size: 13px; color: #000000; margin-left: 100px">
+                                {{ article.sumary|length > 200?article.sumary|slice(0, 200)~'...':article.sumary }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_hot_articles">
+                    {% for place in hotPlaces %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..place.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - place.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-size: 12px">
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
+                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
+                                </a>
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
+                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
+                                </a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_events">
+                    {% for place in focusPlaces %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..place.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - place.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-size: 12px">
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
+                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
+                                </a>
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
+                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
+                                </a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End news group -->
+    <!--Start place group -->
+    <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
+        <a href="{{ constant('URL') ~ 'places' }}"><span style="padding-left: 10px"
+                                                         class="tile-group-title fg-orange"><i
+                        class="icon-location-2 on-left"></i>ĐỊA ĐIỂM <span
+                        class="icon-arrow-right-5"></span></span></a>
+
+        <div class="tab-control-2" data-role="tab-control">
+            <ul class="tabs">
+                <li class="active"><a href="#_new_place"><i class="icon-location on-left-more"></i>&nbsp;Địa điểm
+                        mới</a></li>
+                <li><a href="#_hot_place"><i class="icon-medal on-left-more"></i>&nbsp;Địa điểm nổi bật</a></li>
+                <li><a href="#_golden_place"><i class="icon-star on-left-more"></i>&nbsp;Địa điểm được quan tâm</a></li>
+            </ul>
+
+            <div class="frames">
+                <div class="frame" id="_new_place">
+                    {% for place in newPlaces %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..place.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - place.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-size: 12px">
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
+                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
+                                </a>
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
+                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
+                                </a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_hot_place">
+                    {% for place in hotPlaces %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..place.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - place.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-size: 12px">
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
+                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
+                                </a>
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
+                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
+                                </a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_golden_place">
+                    {% for place in focusPlaces %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..place.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - place.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-size: 12px">
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
+                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
+                                </a>
+                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
+                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
+                                </a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End place group -->
+    <!--Start activities group -->
+    <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
+        <a href="#"><span style="padding-left: 10px" class="tile-group-title fg-green"><i
+                        class="icon-share-2 on-left"></i>HOẠT ĐỘNG <span
+                        class="icon-arrow-right-5"></span></span></a>
+
+        <div class="tab-control-2" data-role="tab-control">
+            <ul class="tabs">
+                <li class="active"><a href="#_new_activities"><i class="icon-location on-left-more"></i>&nbsp;hoạt động
+                        mới</a></li>
+                <li><a href="#_upcoming_activities"><i class="icon-arrow-down-right on-left-more"></i>&nbsp;Hoạt động
+                        sắp diễn ra</a></li>
+                <li><a href="#_hot_activities"><i class="icon-star on-left-more"></i>&nbsp;hoạt động nổi bật</a></li>
+            </ul>
+            <div class="frames" style="background: #ffffff">
+                <div class="frame" id="_new_activities">
+                    {% for activity in newActivities %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ activity.name|length > 30 ? activity.name|slice(0, 30) ~ '...' : activity.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ activity.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..activity.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - activity.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-calendar on-left fg-red"></i>Thời gian: <a
+                                        href="#">{{ activity.startday }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-location-2 on-left fg-red"></i>Tại: <a
+                                        href="{{ constant('URL') ~ 'places/detail/' ~ activity.placeId }}">{{ activity.vplaceName }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_upcoming_activities">
+                    {% for activity in upcomingActivities %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ activity.name|length > 30 ? activity.name|slice(0, 30) ~ '...' : activity.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ activity.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..activity.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - activity.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-calendar on-left fg-red"></i>Thời gian: <a
+                                        href="#">{{ activity.startday }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-location-2 on-left fg-red"></i>Tại: <a
+                                        href="{{ constant('URL') ~ 'places/detail/' ~ activity.placeId }}">{{ activity.vplaceName }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-grid-view on-left fg-red"></i>Qui mô: <a
+                                        href="#">{{ activity.joinerNumber != null?activity.joinerNumber:'Chưa rõ' }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_hot_activities">
+                    {% for activity in hotActivities %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ activity.name|length > 30 ? activity.name|slice(0, 30) ~ '...' : activity.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ activity.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..activity.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - activity.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-calendar on-left fg-red"></i>Thời gian: <a
+                                        href="#">{{ activity.startday }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-location-2 on-left fg-red"></i>Tại: <a
+                                        href="{{ constant('URL') ~ 'places/detail/' ~ activity.placeId }}">{{ activity.vplaceName }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-grid-view on-left fg-red"></i>Qui mô: <a
+                                        href="#">{{ activity.joinerNumber != null?activity.joinerNumber:'Chưa rõ' }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-comments on-left fg-red"></i>Bình luận: <a
+                                        href="{{ constant('URL') ~'activities/detail/' ~ activity.id ~ '?tab=comments' }}">{{ activity.commentTotal }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End activities group -->
+    <!--Start users group -->
+    <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
+        <a href="#"><span style="padding-left: 10px" class="tile-group-title fg-blue"><i
+                        class="icon-user-2 on-left"></i>THÀNH VIÊN <span
+                        class="icon-arrow-right-5"></span></span></a>
+
+        <div class="tab-control-2" data-role="tab-control">
+            <ul class="tabs">
+                <li class="active"><a href="#_new_user"><i class="icon-user-2 on-left-more"></i>&nbsp;Thành viên mới</a>
+                </li>
+                <li><a href="#_active_user"><i class="icon-address-book on-left-more"></i>&nbsp;Bảng vàng tình
+                        nguyện</a></li>
+                <li><a href="#_hot_user"><i class="icon-star on-left-more"></i>&nbsp;Thành viên tích cực</a></li>
+            </ul>
+
+            <div class="frames">
+                <div class="frame" id="_new_user">
+                    {% for user in newUsers %}
+                        <div class="frame-element"
+                             style="display: inline-block; width: 246px; height: 120px; border: 2px solid">
+                            <a style="float: left; margin-top: 10px"
+                               href="{{ constant('URL') ~ 'users/detail/' ~ user.id }}"> <img
+                                        src="{{ constant('URL') ~ 'public/img/' ~ user.imageUrl }}"
+                                        class="cycle polaroid" style="width: 90px; height: 90px;"></a>
+
+                            <div style="float: left; margin-top: 10px">
+                                <a href="{{ constant('URL') ~ 'users/detail/' ~ user.id }}"><p style="color: #00356a; font-size: 15px; font-weight: bold">{{ user.fullname }}</p></a>
+
+                                <p style="padding-left: 5px; font-size: 12px;">{{ ('now'|date('Y') - user.dob|date('Y')) ~ ' tuổi' }}</p>
+
+                                <p style="font-size: 12px;">{{ user.job }}</p>
+
+                                <p style="font-size: 12px;">{{ user.office }}</p>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                {#<div class="frame" id="_upcoming_activities">
+                    {% for activity in upcomingActivities %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ activity.name|length > 30 ? activity.name|slice(0, 30) ~ '...' : activity.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ activity.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..activity.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - activity.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-calendar on-left fg-red"></i>Thời gian: <a
+                                        href="#">{{ activity.startday }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-location-2 on-left fg-red"></i>Tại: <a
+                                        href="{{ constant('URL') ~ 'places/detail/' ~ activity.placeId }}">{{ activity.vplaceName }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-grid-view on-left fg-red"></i>Qui mô: <a
+                                        href="#">{{ activity.joinerNumber != null?activity.joinerNumber:'Chưa rõ' }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="frame" id="_hot_activities">
+                    {% for activity in hotActivities %}
+                        <div class="frame-element" style="display: inline-block">
+                            <div class="image-container"
+                                 style="width: 237px; height: 160px; margin: 4px">
+                                <img src="{{ constant('URL') }}public/img/{{ activity.imageUrl }}"
+                                     style="height: 160px ;width: 237px">
+
+                                <div class="overlay">
+                                    <a href="{{ constant('URL') }}activities/detail/{{ activity.id }}"
+                                       style="color:#ffffff; font-size:14px;">{{ activity.name|length > 30 ? activity.name|slice(0, 30) ~ '...' : activity.name }}</a>
+
+                                    <div class="rating small no-margin fg-yellow" data-score="{{ activity.rating }}"
+                                         data-role="rating" data-stars="5">
+                                        <ul style="margin-bottom: 0px;">
+                                            {% for i in 1..activity.rating %}}
+                                                <li class="rated"></li>{% endfor %}
+                                            {% for i in 1..(5 - activity.rating) %}}
+                                                <li></li>{% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-calendar on-left fg-red"></i>Thời gian: <a
+                                        href="#">{{ activity.startday }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-location-2 on-left fg-red"></i>Tại: <a
+                                        href="{{ constant('URL') ~ 'places/detail/' ~ activity.placeId }}">{{ activity.vplaceName }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-grid-view on-left fg-red"></i>Qui mô: <a
+                                        href="#">{{ activity.joinerNumber != null?activity.joinerNumber:'Chưa rõ' }}</a>
+                            </p>
+
+                            <p style="text-indent: 5px; font-size: 12px">
+                                <i class="icon-comments on-left fg-red"></i>Bình luận: <a
+                                        href="{{ constant('URL') ~'activities/detail/' ~ activity.id ~ '?tab=comments' }}">{{ activity.commentTotal }}</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>#}
+            </div>
+        </div>
+    </div>
+    <!--End user group -->
+    </div>
+    </div>
+{% endblock %}

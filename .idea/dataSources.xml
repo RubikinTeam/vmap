@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="712628931">
+    <data-source source="LOCAL" name="MySQL - map_db@localhost" uuid="ef630d25-5d90-4f86-8f2e-b2e6db35de33">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/map_db</jdbc-url>
+      <user-name>root</user-name>
+      <schema-pattern>map_db.*</schema-pattern>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="MySQL - u406554787_map@mysql.hostinger.vn" uuid="b51d0cb5-0a37-40e2-aee9-5602b426bf54">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://mysql.hostinger.vn:3306/u406554787_map</jdbc-url>
+      <user-name>u406554787_admin</user-name>
+      <user-password>df98df9bdf98df9bdf93df93df98</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

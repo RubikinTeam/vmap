@@ -1,0 +1,107 @@
+<fieldset>
+    <legend><strong>Thêm địa điểm mới</strong></legend>
+    <label>Tên cơ sở</label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="text" name="name" id="name" tabindex="1" autofocus="" required>
+        <button class="btn-clear"></button>
+    </div>
+    <label>Người đại diện</label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="text" name="lname" id="presenter" tabindex="2" required>
+        <button class="btn-clear"></button>
+    </div>
+
+    <label>Loại</label>
+
+    <div class="input-control" data-role="input-control">
+        <select id="type">
+            <option value="1">Mái ấm, nhà mở</option>
+            <option value="2">Trung tâm bảo trợ, làng SOS</option>
+            <option value="3">Chùa/Nhà thờ</option>
+            <option value="4">Trường học / Lớp học</option>
+            <option value="5">Quán ăn / Bếp ăn</option>
+            <option value="6">Công cộng</option>
+            <option value="7">Tư nhân / Tổ chức</option>
+            <option value="8">Khác:</option>
+        </select>
+    </div>
+    <label>Mô tả</label>
+
+    <div class="input-control textarea" data-role="input-control">
+        <textarea id="description"></textarea>
+    </div>
+    <label>Tổ chức chủ quản, bảo trợ: </label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="text" id="organization" tabindex="3" required>
+        <button class="btn-clear"></button>
+    </div>
+    <label>Địa chỉ: </label>
+
+    <div class="input-control text" data-role="input-control">
+        <label>Số:</label><input type="text" id="no" tabindex="3" required>
+        <label>Đường:</label><input type="text" id="street" tabindex="3" required>
+        <label>Phường/Xã:</label><input type="text" id="ward" tabindex="3" required>
+        <label>Quận/Huyện:</label><input type="text" id="dist" tabindex="3" required>
+        <label>Tỉnh/TP:</label><input type="text" id="city" tabindex="3" required>
+    </div>
+    <label>Điện thoại </label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="text" tabindex="4" id="phone">
+    </div>
+    <label>Email </label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="email" tabindex="4" name="email" id="email">
+    </div>
+    <label>Website </label>
+
+    <div class="input-control text" data-role="input-control">
+        <input type="text" tabindex="4" name="website" id="website">
+    </div>
+    <div class="row">
+        <div class="span2">
+            <button class="button success" id="submit">Thêm địa điểm</button>
+            <div id="loadImage" style="width: 30%; height: 30%">
+            </div>
+        </div>
+        <div class="span2"><input type="reset" value="Xóa"></div>
+    </div>
+</fieldset>
+<script>
+    $(document).ready(function () {
+        $("#submit").on('click', function () {
+            $("#loadImage").html('<img src="{{ constant('URL')}}public/img/loading2.gif">');
+            $.post("{{ constant('URL')}}places/addPlace",
+                    {
+                        name: $("#name").val(),
+                        type: $("#type").val(),
+                        organization: $("#organization").val(),
+                        presenter: $("#presenter").val(),
+                        no: $("#no").val(),
+                        street: $("#street").val(),
+                        ward: $("#ward").val(),
+                        dist: $("#dist").val(),
+                        city: $("#city").val(),
+                        dist: $("#dist").val(),
+                        phone: $("#phone").val(),
+                        email: $("#email").val(),
+                        website: $("#website").val(),
+                        description: $("#description").val()
+                    }, function (data, status) {
+                        if (status == "success" && data == "1") {
+                            $("#main-content").html('<h3>Cập nhật thành công</h3>');
+                        }
+                        else {
+                            $("#main-content").html('<h3>Cập nhật Thành công');
+
+                        }
+
+                    }, "text");
+        });
+    })
+
+</script>

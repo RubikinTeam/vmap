@@ -1,0 +1,65 @@
+{% extends '_templates/admin_base.twig' %}
+{% block content %}
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-menu > li > a").on('click', function () {
+                $("#main-content").load("{{ constant('URL') }}admin/" + $(this).attr('id'));
+            })
+        })
+
+    </script>
+    <div class="grid" style="margin-top: 40px">
+        <div class="row">
+            <div class="span3">
+                <nav class="sidebar (light)">
+                    <ul>
+                        <li class="title">Cập nhật</li>
+                        <li class="active"><a href="#"><i class="icon-home"></i>Tổng quan</a></li>
+                        <li class="stick bg-red">
+                            <a class="dropdown-toggle" href="#"><i class="icon-location"></i>Địa điểm</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a id="addLocation">Thêm địa điểm mới</a></li>
+                                <li><a href="">Quản lý loại hình</a></li>
+                                <li><a href="">Quản lý địa điểm</a></li>
+                            </ul>
+                        </li>
+                        <li class="stick bg-yellow">
+                            <a class="dropdown-toggle" href="#"><i class="icon-tree-view"></i>Hoạt động</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="">Thêm hoạt động mới</a></li>
+                                <li><a href="">Quản lý loại hình</a></li>
+                                <li><a href="">Quản lý hoạt động</a></li>
+                            </ul>
+                        </li>
+                        <li class="stick bg-green">
+                            <a class="dropdown-toggle" href="#"><i class="icon-newspaper"></i>Bài viết</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="">Thêm bài viết mới</a></li>
+                                <li><a href="">Quản lý bài viết</a></li>
+                                <li><a href="">Quản lý loại hình</a></li>
+                                <li><a href="">Quản lý sự kiện</a></li>
+                            </ul>
+                        </li>
+                        <li class="stick bg-blue"><a href="#">Thread item</a></li>
+                        <li class="disabled"><a href="#">Disabled item</a></li>
+
+                        <li class="title">Cấu hình</li>
+                        <li><a href="#">Other Item 1</a></li>
+                        <li><a href="#">Other item 2</a></li>
+                        <li><a href="#">Other item 3</a></li>
+                        <li>
+                            <a class="dropdown-toggle" href="#">Sub menu 2</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="">Subitem 1</a></li>
+                                <li><a href="">Subitem 2</a></li>
+                                <li><a href="">Subitem 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="span9" id = "main-content">
+            </div>
+        </div>
+    </div>
+{% endblock %}

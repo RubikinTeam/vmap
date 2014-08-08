@@ -1,0 +1,198 @@
+{% extends "_templates/home_base.twig" %}
+{% block javascripts %}
+    {{ parent() }}
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&appId=576254322458716&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function text(comment) {
+            if (comment.length > 0) {
+                $('#submit').show().fadeIn();
+            }
+            else {
+                $('#submit').hide().fadeOut();
+            }
+        }
+
+        function addComment() {
+            var id = {{ article.id }};
+            var comment = '"' + $('#comment').val() + '"';
+            {% if userLogged == 0 %}
+            var name = $('#commenter').val();
+            var office = $('#office').val();
+            {% else %}
+            var name = "{{ userLogged.fname ~ ' ' ~ userLogged.lname }}";
+            var office = "{{ userLogged.office }}";
+            {% endif %}
+            $.post("{{ constant('URL') }}articles/addComment",
+                    {
+                        id: id,
+                        comment: comment,
+                        name: name,
+                        office: office
+                    }
+            ).done(function () {
+                        $('#comment').val('');
+                        $('#submit').hide().fadeOut();
+                        getComments(id);
+                        var tab = $('#tab_2');
+                        var nComments = tab.data('value');
+                        $('#stat_2').html('<i class="icon-star"></i>Trực tiếp (' + nComments + ')');
+                    }
+            );
+        }
+
+        function getComments(id) {
+            $.post("{{ constant('URL') }}/articles/getArticleComments", {id: id},
+                    function (data) {
+                        $(".listComments").html(data);
+                        var tab = $('#tab_2');
+                        var nComments = tab.data('value');
+                        $('#stat_2').html('<i class="icon-star"></i>Trực tiếp (' + nComments + ')');
+                    })
+        }
+
+        /*setInterval(function () {
+         var tab = $('#_tab_2');
+         var id = tab.data('value');
+         var type = tab.data('role');
+         getComments(id);
+         }, 3000);*/
+    </script>
+{% endblock %}
+{% block content %}
+    <div class="main-content clearfix">
+        <nav class="breadcrumbs small">
+            <ul>
+                <li><a href="{{ constant('URL') }}home"><i class="icon-home"></i></a></li>
+                <li><a href="{{ constant('URL') }}articles">Bài viết</a></li>
+            </ul>
+        </nav>
+        <div class="grid">
+            <div class="row">
+                <div class="span9">
+                    <!--Article's content-->
+                    <p style="color: #93a1a1">
+                        <span><strong>{{ article.date|date('d/m/Y h:i') }}</strong></span>
+                        <a target="_blank" title="Chia sẻ bài viết này qua FaceBook"
+                           href="{{ 'https://www.facebook.com/sharer/sharer.php?u=' ~ constant('URL') ~ 'articles/detail/' ~ article.id }}">
+                            <span style="font-size: 18px; float: right">
+                                <i class="icon-facebook fg-white bg-blue"
+                                   style="border: 1px solid #93a1a1; border-radius: 50%; padding: 5px">
+
+                                </i>
+                            </span>
+                        </a>
+                    </p>
+
+                    <h2><strong>{{ article.title }}</strong></h2>
+
+
+                    <div style="float: left; margin-right: 10px"><img style="width: 300px; height: 200px"
+                                                                      src="{{ constant('URL') ~ '/public/img/' ~ article.imageUrl }}">
+                    </div>
+                    <p><strong>{{ article.sumary }}</strong></p>
+
+                    <p style="text-indent: 20px; clear: both">{{ article.details }}</p>
+
+                    <div class="margin20"></div>
+                    <p style="text-align: right">Tác giả: <strong>{{ article.author }}</strong></p>
+
+                    <div class="margin20"></div>
+                    {% set tags = article.tag|split(', ') %}
+                    <div><p><i class="icon-tag on-left fg-darkred"></i>Tags:
+                            {% for tag in tags %}
+                                <a href="#"><span style="border: 1px solid #93a1a1; background: whitesmoke; padding: 2px; font-size: 12px">{{ tag|trim(',') }}</span></a>
+                            {% endfor %}
+                        </p></div>
+                    <!-- Article's comments-->
+                    <div class="tab-control" data-role="tab-control">
+                        <ul class="tabs">
+                            <li><h2>Bình Luận</h2></li>
+                            <li class="place-right"><a href="#_tab_1"><i class="icon-facebook"></i>Facebook</a></li>
+                            <li class="place-right active"><a href="#_tab_2" id="stat_2"
+                                                              data-value="{{ comments|length }}"><i
+                                            class="icon-star"></i>Trực tiếp ({{ comments|length }})</a></li>
+                        </ul>
+                        <div class="frames">
+                            <div class="frame" id="_tab_1">
+                                <div class="fb-comments"
+                                     data-href="{{ constant('URL') }}articles/detail/{{ article.id }}" data-width="658"
+                                     data-numposts="5" data-colorscheme="light"></div>
+                            </div>
+                            <div class="frame" id="_tab_2" data-role="1" data-value="{{ article.id }}">
+                                <div class="listview-outlook">
+                                    <div class="list">
+                                        <div class="list-content">
+                                            <form>
+                                                <textarea class="list-title place-right" id="comment"
+                                                          placeholder="Ý kiến của bạn"
+                                                          onkeyup="text(this.value)"></textarea>
+                                                {% if userLogged == 0 %}
+                                                    <input type="text" id="commenter" placeholder="Nhập tên bạn"
+                                                           required="true" style="margin: 5px">
+                                                    <input type="text" id="office" placeholder="Đơn vị học tập/công tác"
+                                                           required="true">
+                                                {% endif %}
+                                                <span class="list-subtitle">&nbsp;</span>
+                                                <input class="place-right" id="submit" type="submit"
+                                                       onclick="addComment()" value="Gửi"
+                                                       style="display:none;"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="listComments">
+                                        <div id="tab_2" data-value="{{ comments|length }}">
+                                            {% for comment in comments %}
+                                                <div class="list" id="c{{ comment.id }}" style="cursor:default;">
+                                                    <div class="list-content">
+            <span class="list-icon">
+                <img src="{{ constant('URL') }}public/img/avatar.png" class="pull-left">
+            </span>
+            <span class="list-subtitle">
+                <span class="place-right">{{ comment.date }}</span>
+                {{ comment.name ~ ' - ' ~ comment.office }}
+            </span>
+            <span class="list-title">
+                <span class="place-bottom-right">
+                    <a href="" id="l{{ comment.id }}"><i class="icon-thumbs-up"></i></a> . {{ comment.like }}
+                    <a href="" id="d{{ comment.id }}"><i class="icon-thumbs-down"></i></a> . {{ comment.dislike }}
+                </span>
+                {{ comment.content }}
+            </span>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="panel">
+                        <div class="panel-header">
+                            Bài viết khác
+                        </div>
+                        <div class="panel-content">
+                            <ul>
+                                {% for article in otherArticles %}
+                                    <li>
+                                        <a href="{{ constant('URL') }}articles/detail/{{ article.id }}">{{ article.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cổng thông tin tình nguyện TP.HCM</title>
+    <link href="{{ constant('URL') }}public/css/metro-bootstrap.css" rel="stylesheet">
+    <link href="{{ constant('URL') }}public/css/metro-bootstrap-responsive.css" rel="stylesheet">
+    <link href="{{ constant('URL') }}public/css/iconFont.css" rel="stylesheet">
+    <link href="{{ constant('URL') }}public/css/style.css" rel="stylesheet">
+</head>
+<body class="metro">
+{% block javascripts %}
+    <script src="{{ constant('URL') }}public/js/jquery/jquery-2.1.0.min.js"></script>
+    <script src="{{ constant('URL') }}public/js/jquery/jquery.min.js"></script>
+    <script src="{{ constant('URL') }}public/js/jquery/jquery.widget.min.js"></script>
+    <script src="{{ constant('URL') }}public/js/metro.min.js"></script>
+{% endblock %}
+<header>
+    {% include '_templates/navSearch.twig' %}
+    {% include '_templates/userLogin.twig' %}
+    <nav class="navigation-bar bg-darkBlue fixed-top shadow">
+        <nav class="navigation-bar-content container">
+            <div class="element" style="font-size: 20px">
+                <strong>CỔNG THÔNG TIN TÌNH NGUYỆN</strong>
+            </div>
+
+            <span class="element-divider"></span>
+            <a class="element brand" id="homeButton" href="{{ constant('URL') }}home"><span
+                        class="icon-home"></span></a>
+            <span class="element-divider"></span>
+
+            <div class="element input-element">
+                <form>
+                    <div class="input-control text">
+                        <input id="txt-search" autocomplete="off" type="text" style="width: 400px"
+                               placeholder="Search...">
+                        <button class="btn-search"></button>
+                    </div>
+                    <div class="search-result">
+                        <ul class="result-wrapper">
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            {% if userLogged == 0 %}
+                {# <input type="hidden" id = "userLoggedId" value = "{{ userLogged.id }}">#}
+                <a class="element place-right" id="userSignUpButton"
+                   href="{{ constant('URL') ~ 'users/register/' }}"><span class="icon-user"></span>&nbsp;&nbsp;Đăng
+                    ký</a>
+                <a class="element place-right" id="userLoginButton" href="#"><span class="icon-key-2"></span>&nbsp;&nbsp;Đăng
+                    nhập</a>
+            {% else %}
+                <div class="element place-right">
+                    <a class="dropdown-toggle" href="#">
+                        <span class="icon-cog"></span>&nbsp;&nbsp;
+                    </a>
+                    <ul class="dropdown-menu place-right" data-role="dropdown">
+                        <li><a href="{{ constant('URL') ~ 'users/detail/' ~ userLogged.id }}"><span
+                                        class="icon-user on-left fg-blue"></span>Hồ sơ</a></li>
+                        <li><a href="#"><span class="icon-mail on-left fg-blue"></span>Tin nhắn</a></li>
+                        <li><a href="#"><span class="icon-bell on-left fg-blue"></span>Thông báo</a></li>
+                    </ul>
+                </div>
+                <span class="element-divider place-right"></span>
+                <a class="element place-right" href="{{ constant('URL') ~ 'users/userlogout/' }}"><span
+                            class="icon-exit"></span></a>
+                <span class="element-divider place-right"></span>
+                <button class="element image-button image-left place-right">
+                    {{ userLogged.fname ~ ' ' ~ userLogged.lname }}
+                    <img src="{{ userLogged.imageUrl }}"/>
+                </button>
+            {% endif %}
+        </nav>
+    </nav>
+</header>
+<!-- -->
+<div class="container">
+    <div class="header-menu">
+        <div class="clearfix">
+            <a class="place-left" href="{{ constant('URL') }}home" title="">
+            </a>
+        </div>
+    </div>
+    <!-- Content, will be passed here via Twig -->
+    {% block content %} {% endblock %}
+</div>
+<footer>
+    <div class="grid" style="border-top: 1px dotted #435a5f; background: whitesmoke">
+        <style type="text/css">
+            .span3 > p, .span2 > p {
+                font-size: 16px;
+                border-bottom: 1px solid #5c5c5c;
+                color: #93a1a1;
+                padding-bottom: 5px;
+            }
+            .span3 > ul {
+                list-style: none;
+            }
+            .span3 a:hover {
+                text-decoration: underline;
+                color: #ff0000;
+            }
+            .span3 ul li {
+                line-height: 200%;
+            }
+            .span2 ul {
+                list-style: none;
+                font-size: 30px;
+            }
+            .span2 ul li {
+                line-height: 150%;
+            }
+            .span2 ul li i{
+                border: 2px solid #93a1a1;
+                padding: 7px;
+                margin: 5px;
+                border-radius: 50%;
+                background: #93a1a1;
+                color: #ffffff;
+            }
+            .span2 ul li i:hover{
+                background: darkblue;
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <p><span class="icon-list on-left"></span> Danh mục</p>
+                    <ul>
+                        <a href="#"><li> Trang chủ</li></a>
+                        <a href="#"><li> Tin tức</li></a>
+                        <a href="#"><li> Bản đồ</li></a>
+                        <a href="#"><li> Địa điểm</li></a>
+                        <a href="#"><li> Hoạt động</li></a>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <p><span class="icon-cog on-left"></span> Chức năng</p>
+                    <ul>
+                        <a href="#"><li> Đăng ký thành viên</li></a>
+                        <a href="#"><li> Tạo hoạt động</li></a>
+                        <a href="#"><li> Tạo địa điểm</li></a>
+                        <a href="#"><li> Chia sẻ</li></a>
+                        <a href="#"><li> Đăng bài</li></a>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <p><span class="icon-info on-left"></span> Về chúng tôi</p>
+                    <ul>
+                        <a href="#"><li> Giới thiệu</li></a>
+                        <a href="#"><li> Ý tưởng</li></a>
+                        <a href="#"><li> Báo chí</li></a>
+                        <a href="#"><li> Góp ý</li></a>
+                        <a href="#"><li> Liên hệ</li></a>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <p><span class="icon-link on-left"></span> Liên kết</p>
+                    <ul>
+                        <a href="#"><li> Trung ương Đoàn</li></a>
+                        <a href="#"><li> Thành Đoàn TP.HCM</li></a>
+                        <a href="#"><li> Trung ương hội SV Việt Nam</li></a>
+                        <a href="#"><li> Hội sinh viên TP.HCM</li></a>
+                        <a href="#"><li> Trường ĐH Bách Khoa</li></a>
+                    </ul>
+                </div>
+                <div class="span2">
+                    <p><span class="icon-mail on-left"></span>Kết nối</p>
+                    <ul>
+                        <li><a href="https://www.facebook.com/WeAreBKMedia"><i class="icon-facebook"></i></a> </li>
+                        <li><a href="https://www.youtube.com/user/bkmediahcm"><i class="icon-youtube"></i></a> </li>
+                        <li><a href="#"><i class="icon-google-plus"></i></a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

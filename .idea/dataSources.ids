@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - map_db@localhost" uuid="ef630d25-5d90-4f86-8f2e-b2e6db35de33">
+    <database-info product="MySQL" version="5.6.17" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.31 ( Revision: alexander.soklakov@oracle.com-20140520065950-groqzzbvxprqdmnz )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="map_db"/>
+    <table name="activities" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="createDate" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="type" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="Nw=="/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <column name="nameASCII" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="LONGTEXT" length="2147483647" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="startday" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="endday" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="contact" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="rating" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="createrId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="locationId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="addId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="placeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" remarks="cGxhY2Ugb2YgcGxhY2UgdGFibGUgKG5vdCB2X3BsYWNlKQ=="/>
+      <column name="albumId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="thumbnailImageId" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12" def="JzAn"/>
+      <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="joinerNumber" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" remarks="c28gbmd1b2kgdGhhbSBnaWE="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="FK_38FA41144584665A" unique="false" columns="createrId"/>
+      <index name="FK_38FA4114A7C41D6A" unique="false" columns="addId"/>
+      <index name="FK_38FA4114A7C41D6F" unique="false" columns="locationId"/>
+      <index name="FK_38FA4114A7C41D7F" unique="false" columns="placeId"/>
+      <index name="thumbnailImageId" unique="false" columns="thumbnailImageId"/>
+    </table>
+    <table name="activity_article" schema="" catalog="map_db" type="TABLE">
+      <column name="activityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="activityId,articleId"/>
+    </table>
+    <table name="activity_vplace" schema="" catalog="map_db" type="TABLE">
+      <column name="activityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="vplaceId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="activityId,vplaceId"/>
+    </table>
+    <table name="activitycomments" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="activityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="address" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="no" sqlType="VARCHAR" length="10" precision="0" nullable="false" jdbcType="12"/>
+      <column name="street" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="ward" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="dist" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="city" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="albumdetail" schema="" catalog="map_db" type="TABLE">
+      <column name="albumId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="imageId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="albumId,imageId"/>
+      <foreign-key name="FK_albumdetail" columns="albumId" ref-table="imagesalbum" ref-schema="" ref-catalog="map_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="articlecomments" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="content" sqlType="VARCHAR" length="250" precision="0" nullable="false" jdbcType="12"/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="office" sqlType="VARCHAR" length="25" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="articles" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="title" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="titleASCII" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12"/>
+      <column name="authorId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="sumary" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="details" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="source" sqlType="VARCHAR" length="500" precision="0" nullable="false" jdbcType="12"/>
+      <column name="relativePlaceId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <column name="like" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="dislike" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="thumbnailImageId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="FK_author" unique="false" columns="authorId"/>
+      <index name="thumbnailImageId" unique="false" columns="thumbnailImageId"/>
+    </table>
+    <table name="entry" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="content" sqlType="VARCHAR" length="250" precision="0" nullable="false" jdbcType="12"/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="group" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="images" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="caption" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="imageUrl" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="creatorId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="imagesalbum" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_albumdetail" table="albumdetail" schema="" catalog="map_db" columns="albumId"/>
+    </table>
+    <table name="location" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="lat" sqlType="DOUBLE" length="22" precision="0" nullable="false" jdbcType="8"/>
+      <column name="long" sqlType="DOUBLE" length="22" precision="0" nullable="false" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="placecomments" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="time" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="placeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="takepart" schema="" catalog="map_db" type="TABLE">
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="activityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="userId,activityId"/>
+    </table>
+    <table name="user" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="status" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="activeDate" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="fname" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="lname" sqlType="VARCHAR" length="15" precision="0" nullable="false" jdbcType="12"/>
+      <column name="gender" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="fullnameASCII" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="activationCode" sqlType="VARCHAR" length="32" precision="0" nullable="false" jdbcType="12"/>
+      <column name="passwordRecoveryCode" sqlType="VARCHAR" length="32" precision="0" nullable="true" jdbcType="12"/>
+      <column name="groupId" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MQ=="/>
+      <column name="dob" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <column name="addressId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="job" sqlType="VARCHAR" length="25" precision="0" nullable="false" jdbcType="12"/>
+      <column name="office" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" length="25" precision="0" nullable="false" jdbcType="12"/>
+      <column name="shortDes" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="avatarId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="id_2" unique="true" columns="id"/>
+      <index name="avatar_FK" unique="false" columns="avatarId"/>
+      <index name="FK_user_group_id" unique="false" columns="groupId"/>
+    </table>
+    <table name="user_vplace" schema="" catalog="map_db" type="TABLE">
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="vplaceId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="userId,vplaceId"/>
+    </table>
+    <table name="userfollow" schema="" catalog="map_db" type="TABLE">
+      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="friendId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="userId,friendId"/>
+    </table>
+    <table name="v_place" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="createDate" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="name" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="organization" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="nameASCII" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12"/>
+      <column name="presenter" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="phone" sqlType="VARCHAR" length="15" precision="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <column name="website" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <column name="rating" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="addressId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="locationId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="creatorId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="thumbnailImageId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="albumId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="FK_vplace_address" unique="false" columns="addressId"/>
+      <index name="FK_vplace_location" unique="false" columns="locationId"/>
+      <index name="FK_vplace_user" unique="false" columns="creatorId"/>
+      <index name="thumbnailImageId" unique="false" columns="thumbnailImageId"/>
+    </table>
+  </data-source>
+  <data-source source="LOCAL" name="MySQL - u406554787_map@mysql.hostinger.vn" uuid="b51d0cb5-0a37-40e2-aee9-5602b426bf54">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
+</component>

@@ -1,0 +1,22 @@
+<div id="tab_2" data-value="{{ comments|length }}">
+    {% for comment in comments %}
+        <div class="list"  id="c{{ comment.id }}" style="cursor:default;">
+            <div class="list-content">
+            <span class="list-icon">
+                <img src="{{ constant('URL') }}public/img/avatar.png" class="pull-left">
+            </span>
+            <span class="list-subtitle">
+                <span class="place-right">{{ comment.date }}</span>
+                {{ comment.name ~ ' - ' ~ comment.office }}
+            </span>
+            <span class="list-title">
+                <span class="place-bottom-right">
+                    <a href="" id="l{{ comment.id }}"><i class="icon-thumbs-up"></i></a> . {{ comment.like }}
+                    <a href="" id="d{{ comment.id }}"><i class="icon-thumbs-down"></i></a> . {{ comment.dislike }}
+                </span>
+                {{ comment.content }}
+            </span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
