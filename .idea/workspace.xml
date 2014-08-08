@@ -49,10 +49,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activitiesmodel.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="activitiesmodel.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/models/activitiesmodel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="17" selection-start="4140" selection-end="4140" vertical-scroll-proportion="0.23484848" vertical-offset="2035" max-vertical-offset="2618">
+            <state line="127" column="17" selection-start="4140" selection-end="4140" vertical-scroll-proportion="-4.769231" vertical-offset="2035" max-vertical-offset="2618">
               <folding>
                 <marker date="1407354568000" expanded="true" signature="1199:1473" placeholder="SELECT a.*, ..." />
                 <marker date="1407354568000" expanded="true" signature="3023:3270" placeholder="SELECT a.`id..." />
@@ -65,19 +65,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="places.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controller/places.php">
+      <file leaf-file-name="config.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/config/config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="88" selection-end="120" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1683">
+            <state line="27" column="19" selection-start="789" selection-end="789" vertical-scroll-proportion="0.6913124" vertical-offset="0" max-vertical-offset="969">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mailerModel.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/models/mailerModel.php">
+      <file leaf-file-name="places.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/controller/places.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="30" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1428">
+            <state line="8" column="0" selection-start="88" selection-end="120" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1683">
               <folding />
             </state>
           </provider>
@@ -694,14 +694,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899022" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32828283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21752267" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24961714" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2688822" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2688822" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3007874" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -965,11 +965,6 @@
         <state line="110" column="59" selection-start="5737" selection-end="5737" vertical-scroll-proportion="-71.92308" vertical-offset="0" max-vertical-offset="2057" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="19" selection-start="789" selection-end="789" vertical-scroll-proportion="-0.46153846" vertical-offset="362" max-vertical-offset="969" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/models/mailerModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="63" column="30" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1428">
@@ -1040,7 +1035,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/models/activitiesmodel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="17" selection-start="4140" selection-end="4140" vertical-scroll-proportion="0.23484848" vertical-offset="2035" max-vertical-offset="2618">
+        <state line="127" column="17" selection-start="4140" selection-end="4140" vertical-scroll-proportion="-4.769231" vertical-offset="2035" max-vertical-offset="2618">
           <folding>
             <marker date="1407354568000" expanded="true" signature="1199:1473" placeholder="SELECT a.*, ..." />
             <marker date="1407354568000" expanded="true" signature="3023:3270" placeholder="SELECT a.`id..." />
@@ -1049,6 +1044,13 @@
             <marker date="1407354568000" expanded="true" signature="4452:4531" placeholder="SELECT userI..takepart..." />
             <marker date="1407354568000" expanded="true" signature="4636:4705" placeholder="INSERT INTO ..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="19" selection-start="789" selection-end="789" vertical-scroll-proportion="0.6913124" vertical-offset="0" max-vertical-offset="969">
+          <folding />
         </state>
       </provider>
     </entry>
