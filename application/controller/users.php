@@ -37,10 +37,15 @@ class Users extends Controller
         }
     }
     public function detail($id) {
+        if (isset($_GET['tab'])) {
+            $tab = $_GET['tab'];
+        } else {
+            $tab = 'profile';
+        }
         $user_model = $this->loadModel('usersmodel');
         $userDetails = $user_model->getUserById($id);
         $userLogged = $user_model->checkUserLogged();
-        $this->render('users/detail', array('userDetails' => $userDetails, 'userLogged' => $userLogged));
+        $this->render('users/detail', array('userDetails' => $userDetails, 'userLogged' => $userLogged, 'tab' =>$tab));
     }
 
     public function userFollow() {

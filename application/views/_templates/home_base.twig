@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Cổng thông tin tình nguyện TP.HCM</title>
+    <title>Cổng thông tin tình nguyện TP.HCM -  {% block title %}{% endblock %}</title>
     <link href="{{ constant('URL') }}public/css/metro-bootstrap.css" rel="stylesheet">
     <link href="{{ constant('URL') }}public/css/metro-bootstrap-responsive.css" rel="stylesheet">
     <link href="{{ constant('URL') }}public/css/iconFont.css" rel="stylesheet">
@@ -36,7 +36,7 @@
             <div class="element input-element">
                 <form>
                     <div class="input-control text">
-                        <input id="txt-search" autocomplete="off" type="text" style="width: 400px"
+                        <input id="txt-search" autocomplete="off" type="text" size="60" style="width: 100%"
                                placeholder="Search...">
                         <button class="btn-search"></button>
                     </div>
@@ -71,7 +71,7 @@
                             class="icon-exit"></span></a>
                 <span class="element-divider place-right"></span>
                 <button class="element image-button image-left place-right">
-                    {{ userLogged.fname ~ ' ' ~ userLogged.lname }}
+                    {{userLogged.lname }}
                     <img src="{{ userLogged.imageUrl }}"/>
                 </button>
             {% endif %}
@@ -98,32 +98,39 @@
                 color: #93a1a1;
                 padding-bottom: 5px;
             }
+
             .span3 > ul {
                 list-style: none;
             }
+
             .span3 a:hover {
                 text-decoration: underline;
                 color: #ff0000;
             }
+
             .span3 ul li {
-                line-height: 200%;
+                line-height: 150%;
             }
+
             .span2 ul {
                 list-style: none;
-                font-size: 30px;
+                font-size: 20px;
             }
+
             .span2 ul li {
                 line-height: 150%;
             }
-            .span2 ul li i{
+
+            .span2 ul li i {
                 border: 2px solid #93a1a1;
-                padding: 7px;
-                margin: 5px;
+                padding: 3px;
+                margin: 3px;
                 border-radius: 50%;
                 background: #93a1a1;
                 color: #ffffff;
             }
-            .span2 ul li i:hover{
+
+            .span2 ul li i:hover {
                 background: darkblue;
             }
         </style>
@@ -132,49 +139,89 @@
                 <div class="span3">
                     <p><span class="icon-list on-left"></span> Danh mục</p>
                     <ul>
-                        <a href="#"><li> Trang chủ</li></a>
-                        <a href="#"><li> Tin tức</li></a>
-                        <a href="#"><li> Bản đồ</li></a>
-                        <a href="#"><li> Địa điểm</li></a>
-                        <a href="#"><li> Hoạt động</li></a>
+                        <a href="#">
+                            <li> Trang chủ</li>
+                        </a>
+                        <a href="#">
+                            <li> Tin tức</li>
+                        </a>
+                        <a href="#">
+                            <li> Bản đồ</li>
+                        </a>
+                        <a href="#">
+                            <li> Địa điểm</li>
+                        </a>
+                        <a href="#">
+                            <li> Hoạt động</li>
+                        </a>
                     </ul>
                 </div>
                 <div class="span3">
                     <p><span class="icon-cog on-left"></span> Chức năng</p>
                     <ul>
-                        <a href="#"><li> Đăng ký thành viên</li></a>
-                        <a href="#"><li> Tạo hoạt động</li></a>
-                        <a href="#"><li> Tạo địa điểm</li></a>
-                        <a href="#"><li> Chia sẻ</li></a>
-                        <a href="#"><li> Đăng bài</li></a>
+                        <a href="#">
+                            <li> Đăng ký thành viên</li>
+                        </a>
+                        <a href="#">
+                            <li> Tạo hoạt động</li>
+                        </a>
+                        <a href="#">
+                            <li> Tạo địa điểm</li>
+                        </a>
+                        <a href="#">
+                            <li> Chia sẻ</li>
+                        </a>
+                        <a href="#">
+                            <li> Đăng bài</li>
+                        </a>
                     </ul>
                 </div>
                 <div class="span3">
                     <p><span class="icon-info on-left"></span> Về chúng tôi</p>
                     <ul>
-                        <a href="#"><li> Giới thiệu</li></a>
-                        <a href="#"><li> Ý tưởng</li></a>
-                        <a href="#"><li> Báo chí</li></a>
-                        <a href="#"><li> Góp ý</li></a>
-                        <a href="#"><li> Liên hệ</li></a>
+                        <a href="#">
+                            <li> Giới thiệu</li>
+                        </a>
+                        <a href="#">
+                            <li> Ý tưởng</li>
+                        </a>
+                        <a href="#">
+                            <li> Báo chí</li>
+                        </a>
+                        <a href="#">
+                            <li> Góp ý</li>
+                        </a>
+                        <a href="#">
+                            <li> Liên hệ</li>
+                        </a>
                     </ul>
                 </div>
                 <div class="span3">
                     <p><span class="icon-link on-left"></span> Liên kết</p>
                     <ul>
-                        <a href="#"><li> Trung ương Đoàn</li></a>
-                        <a href="#"><li> Thành Đoàn TP.HCM</li></a>
-                        <a href="#"><li> Trung ương hội SV Việt Nam</li></a>
-                        <a href="#"><li> Hội sinh viên TP.HCM</li></a>
-                        <a href="#"><li> Trường ĐH Bách Khoa</li></a>
+                        <a href="#">
+                            <li> Trung ương Đoàn</li>
+                        </a>
+                        <a href="#">
+                            <li> Thành Đoàn TP.HCM</li>
+                        </a>
+                        <a href="#">
+                            <li> Trung ương hội SV Việt Nam</li>
+                        </a>
+                        <a href="#">
+                            <li> Hội sinh viên TP.HCM</li>
+                        </a>
+                        <a href="#">
+                            <li> Trường ĐH Bách Khoa</li>
+                        </a>
                     </ul>
                 </div>
                 <div class="span2">
                     <p><span class="icon-mail on-left"></span>Kết nối</p>
                     <ul>
-                        <li><a href="https://www.facebook.com/WeAreBKMedia"><i class="icon-facebook"></i></a> </li>
-                        <li><a href="https://www.youtube.com/user/bkmediahcm"><i class="icon-youtube"></i></a> </li>
-                        <li><a href="#"><i class="icon-google-plus"></i></a> </li>
+                        <li><a href="https://www.facebook.com/WeAreBKMedia"><i class="icon-facebook"></i></a></li>
+                        <li><a href="https://www.youtube.com/user/bkmediahcm"><i class="icon-youtube"></i></a></li>
+                        <li><a href="#"><i class="icon-google-plus"></i></a></li>
                     </ul>
                 </div>
             </div>

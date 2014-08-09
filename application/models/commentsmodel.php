@@ -19,13 +19,13 @@ class commentsModel {
         $query->execute();
         switch ($type) {
             case 1:
-                $sql = "INSERT INTO articleComments(`articleId`";
+                $sql = "INSERT INTO articleComments(articleId";
                 break;
             case 2:
-                $sql = "INSERT INTO placeComments(`placeId`";
+                $sql = "INSERT INTO placeComments(placeId";
                 break;
             case 3:
-                $sql = "INSERT INTO activityComments(`activityId`";
+                $sql = "INSERT INTO activityComments(activityId";
                 break;
         }
         $sql .= ", `content`, `name`, `office`) VALUES ($id, '$comment', '$name', '$office')";

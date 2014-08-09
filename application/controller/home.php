@@ -18,6 +18,7 @@ class Home extends Controller
     {
         $articles_model = $this->loadModel('articlesmodel');
         $newArticles = $articles_model->getSomeArticles(0, 2, 6);
+        $hotArticles = $articles_model->getSomeArticles(0, 5, 6);
 
         $activities_model = $this->loadModel('ActivitiesModel');
         $activities = $activities_model->getSomeActivities(0, 0, 3, 6);
@@ -42,6 +43,7 @@ class Home extends Controller
 	    // render the view, pass the data
         $this->render('home/index', array(
             'newArticles' => $newArticles,
+            'hotArticles' => $hotArticles,
             'activities' => $activities,
             'newActivities' => $newActivities,
             'upcomingActivities' => $upcomingActivities,

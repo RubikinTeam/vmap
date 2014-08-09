@@ -146,4 +146,15 @@ class ActivitiesModel
             return 0;
         }
     }
+    public function addShare($id, $type) {
+        $sql = "UPDATE activities SET ";
+        if ($type == 1)
+            $sql .= "FBShare = FBShare + 1";
+        else
+            $sql .= "GPlusShare = GPlusShare + 1";
+        $sql .= " WHERE id = $id";
+        var_dump($sql);
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
 }

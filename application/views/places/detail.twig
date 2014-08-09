@@ -1,16 +1,7 @@
 {% extends "_templates/home_base.twig" %}
 {% block javascripts %}
     {{ parent() }}
-    <div id="fb-root" xmlns="http://www.w3.org/1999/html"></div>
-    <script>(function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&appId=576254322458716&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
+    <script>
         function text(comment) {
             if (comment.length > 0) {
                 $('#submit').show().fadeIn();
@@ -23,12 +14,14 @@
         function addComment() {
             var id = {{ place.id }};
             var comment = '"' + $('#comment').val() + '"';
+            var name;
+            var office
             {% if userLogged == 0 %}
-            var name = $('#commenter').val();
-            var office = $('#office').val();
+            name = $('#commenter').val();
+            office = $('#office').val();
             {% else %}
-            var name = "{{ userLogged.fname ~ ' ' ~ userLogged.lname }}";
-            var office = "{{ userLogged.office }}";
+            name = "{{ userLogged.fname ~ ' ' ~ userLogged.lname }}";
+            office = "{{ userLogged.office }}";
             {% endif %}
             $.post("{{ constant('URL') }}places/addComment",
                     {
@@ -58,13 +51,19 @@
                     })
         }
 
-       /*setInterval(function () {
-            var id = {{ place.id }};
-            getComments(id);
-        }, 3000);*/
+        /*setInterval(function () {
+         var id = {{ place.id }};
+         getComments(id);
+         }, 3000);*/
     </script>
 {% endblock %}
+{% block title %}
+    Địa điểm - {{ place.name }}
+{% endblock %}
 {% block content %}
+    {% set objectType = 2 %}
+    {% set object = place %}
+    {% set midUrl = 'places/detail/' %}
     <div class="main-content clearfix">
         <nav class="breadcrumbs small">
             <ul>
@@ -76,16 +75,11 @@
             <div class="row">
                 <div class="span9">
                     <p style="color: #93a1a1">
-                        <span><strong>{{ activity.createDate|date('d/m/Y h:i') }}</strong></span>
-                        <a target="_blank" title="Chia sẻ địa điểm này qua FaceBook"
-                           href="{{'https://www.facebook.com/sharer/sharer.php?u=' ~ constant('URL') ~ 'places/detail/' ~ activity.id}}">
-                            <span style="font-size: 18px; float: right">
-                                <i class="icon-facebook fg-white bg-blue" style="border: 1px solid #93a1a1; border-radius: 50%; padding: 5px">
-
-                                </i>
-                            </span>
-                        </a>
+                        <span><strong>{{ place.createDate|date('d/m/Y h:i') }}</strong></span>
+                        {% include "_templates/sharer.twig" %}
                     </p>
+
+                    <div class="margin20"></div>
                     <!--Place's content-->
                     <div class="tab-control" data-role="tab-control">
                         <ul class="tabs">
@@ -114,8 +108,7 @@
                                     {% for activity in activities %}
                                         <a href="{{ '../../activities/detail/'~ activity.id }}" class="list">
                                             <div class="list-content">
-                                                <img src="{{ constant('URL') ~ 'public/img/' ~ activity.imageUrl }}"
-                                                     class="icon">
+                                                <img src="{{ constant('URL') ~ 'public/img/' ~ activity.imageUrl }}">
 
                                                 <div class="data">
                                                     <span class="list-title">{{ activity.name }}</span>
@@ -154,69 +147,7 @@
                             </div>
                             <div class="frame" id="_articles">...</div>
                             <div class="frame" id="_comments">
-                                <div class="tab-control" data-role="tab-control">
-                                    <ul class="tabs">
-                                        <li class="place-right"><a href="#_tab_1"><i class="icon-facebook"></i>Facebook</a>
-                                        </li>
-
-                                        <li class="place-right active"><a href="#_tab_2" id="stat_2"><i
-                                                        class="icon-star"></i>Trực tiếp({{ comments|length }})</a></li>
-                                    </ul>
-                                    <div class="frames">
-                                        <div class="frame" id="_tab_1">
-                                            <div class="fb-comments"
-                                                 data-href="{{ constant('URL') }}places/detail/{{ place.placeId }}"
-                                                 data-width="658" data-numposts="5" data-colorscheme="light"></div>
-                                        </div>
-                                        <div class="frame" id="_tab_2" data-role="1" data-value="{{ place.id }}">
-                                            <div class="listview-outlook">
-                                                <div class="list">
-                                                    <div class="list-content">
-                                                        <form>
-                                                            <textarea class="list-title place-right" id="comment"
-                                                                      placeholder="Ý kiến của bạn"
-                                                                      onkeyup="text(this.value)"></textarea>
-                                                            {% if userLogged == 0 %}
-                                                                <input type="text" id="commenter" placeholder="Nhập tên bạn"
-                                                                       required="true" style="margin: 5px">
-                                                                <input type="text" id="office" placeholder="Đơn vị học tập/công tác"
-                                                                       required="true">
-                                                            {% endif %}
-                                                            <span class="list-subtitle">&nbsp;</span>
-                                                            <input class="place-right" id="submit" type="submit"
-                                                                   onclick="addComment()" value="Gửi"
-                                                                   style="display:none;"/>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div class="listComments">
-                                                    <div id="tab_2" data-value="{{ comments|length }}">
-                                                        {% for comment in comments %}
-                                                            <div class="list" id="c{{ comment.id }}" style="cursor:default;">
-                                                                <div class="list-content">
-            <span class="list-icon">
-                <img src="{{ constant('URL') }}public/img/avatar.png" class="pull-left">
-            </span>
-            <span class="list-subtitle">
-                <span class="place-right">{{ comment.date }}</span>
-                {{ comment.name ~ ' - ' ~ comment.office }}
-            </span>
-            <span class="list-title">
-                <span class="place-bottom-right">
-                    <a href="" id="l{{ comment.id }}"><i class="icon-thumbs-up"></i></a> . {{ comment.like }}
-                    <a href="" id="d{{ comment.id }}"><i class="icon-thumbs-down"></i></a> . {{ comment.dislike }}
-                </span>
-                {{ comment.content }}
-            </span>
-                                                                </div>
-                                                            </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% include "_templates/comments.twig" %}
                             </div>
                         </div>
                     </div>

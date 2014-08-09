@@ -12,7 +12,6 @@ function takePart(userId, activityId) {
                 'userId': userId,
                 'activityId': activityId
             }).done(function(data) {
-                //alert(data);
                 if (data == 0) {
                     $.Notify({style: {background: 'red', color: 'white'}, content: "Bạn đã đăng ký hoạt động này"});
                 }

@@ -58,7 +58,7 @@
                     $("#carousel1").carousel({
                         auto: true,
                         period: 3000,
-                        duration: 2000,
+                        duration: 1500,
                         effect: 'fade',
                         markers: {
                             show: false
@@ -169,7 +169,7 @@
                 <div class="tile-content article">
                     <div class="panel no-border">
                         <div class="panel-header bg-darkRed fg-white">
-                            <a href="{{ constant('URL') }}newArticles/detail/{{ article.id }}"
+                            <a href="{{ constant('URL') }}articles/detail/{{ article.id }}"
                                style="color:white; font-size:20px;">
                                 {{ article.title }}
                             </a>
@@ -201,63 +201,10 @@
             </ul>
             <div class="frames" style="border: none; background: none">
                 <div class="frame" id="_new_articles">
-                    {% for article in newArticles %}
-                        <div style="float: left; width: 325px; height: 170px; margin-right: 5px; margin-bottom: 5px; border: 1px solid whitesmoke">
-                            <a href="{{ constant('URL') ~'articles/detail/' ~ article.id }}">
-                                <p style="font-size: 18px; color: #000000; margin: 2px">
-                                    <strong>{{ article.title|length > 60?article.title|slice(0, 60)~'...':article.title }}</strong>
-                                    {% if article.commentTotal>0 %}
-                                        <span style="color: #9a1616; font-size: 16px">
-                                            <span style="font-size: 20px" class="icon-comments-2"></span>
-                                            {{ article.commentTotal }}
-                                        </span>
-                                    {% endif %}
-                                </p>
-                            </a>
-
-                            <div style="float: left">
-                                <img style="width: 90px; height: 90px"
-                                     src="{{ constant('URL') ~'public/img/' ~ article.imageUrl }}">
-                            </div>
-                            <div style="font-size: 13px; color: #000000; margin-left: 100px">
-                                {{ article.sumary|length > 200?article.sumary|slice(0, 200)~'...':article.sumary }}
-                            </div>
-                        </div>
-                    {% endfor %}
+                    {% include "_templates/article_detail_base.twig" %}
                 </div>
                 <div class="frame" id="_hot_articles">
-                    {% for place in hotPlaces %}
-                        <div class="frame-element" style="display: inline-block">
-                            <div class="image-container"
-                                 style="width: 237px; height: 160px; margin: 4px">
-                                <img src="{{ constant('URL') }}public/img/{{ place.imageUrl }}"
-                                     style="height: 160px ;width: 237px">
-
-                                <div class="overlay">
-                                    <a href="{{ constant('URL') }}places/detail/{{ place.id }}"
-                                       style="color:#ffffff; font-size:14px;">{{ place.name }}</a>
-
-                                    <div class="rating small no-margin fg-yellow" data-score="{{ place.rating }}"
-                                         data-role="rating" data-stars="5">
-                                        <ul style="margin-bottom: 0px;">
-                                            {% for i in 1..place.rating %}}
-                                                <li class="rated"></li>{% endfor %}
-                                            {% for i in 1..(5 - place.rating) %}}
-                                                <li></li>{% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <p style="text-align: center; font-size: 12px">
-                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=comments' }}"><i
-                                            class="icon-comments-2 on-left fg-darkBlue"></i>{{ place.commentTotal ~ ' bình luận | ' }}
-                                </a>
-                                <a href="{{ constant('URL') ~ 'places/detail/' ~ place.id ~ '?tab=activities' }}"><i
-                                            class="icon-share-2 on-left fg-darkBlue"></i>{{ place.activitiesTotal ~ ' hoạt động' }}
-                                </a>
-                            </p>
-                        </div>
-                    {% endfor %}
+                    {% include "_templates/article_detail_base.twig" %}
                 </div>
                 <div class="frame" id="_events">
                     {% for place in focusPlaces %}

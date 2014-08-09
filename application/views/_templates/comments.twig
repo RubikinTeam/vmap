@@ -1,0 +1,74 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=429828337119218&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="tab-control" data-role="tab-control">
+    <ul class="tabs">
+        <li class="place-right"><a href="#_tab_1"><i class="icon-facebook"></i>Facebook</a>
+        </li>
+
+        <li class="place-right active"><a href="#_tab_2" id="stat_2"><i
+                        class="icon-star"></i>Trực tiếp({{ comments|length }})</a></li>
+    </ul>
+    <div class="frames">
+        <div class="frame" id="_tab_1">
+            <div class="fb-comments" data-href="{{ constant('URL') ~ midUrl ~ object.id }}" data-numposts="5" data-colorscheme="light" data-width="650px">
+            </div>
+        </div>
+        <div class="frame" id="_tab_2" data-role="1" data-value="{{ object.id }}">
+            <div class="listview-outlook">
+                <div class="list">
+                    <div class="list-content">
+                        <form>
+                            <textarea class="list-title place-right" id="comment"
+                                      placeholder="Ý kiến của bạn"
+                                      onkeyup="text(this.value)"></textarea>
+                            {% if userLogged == 0 %}
+                                <input type="text" id="commenter"
+                                       placeholder="Nhập tên bạn"
+                                       required="true" style="margin: 5px">
+                                <input type="text" id="office"
+                                       placeholder="Đơn vị học tập/công tác"
+                                       required="true">
+                            {% endif %}
+                            <span class="list-subtitle">&nbsp;</span>
+                            <input class="place-right" id="submit" type="submit"
+                                   onclick="addComment()" value="Gửi"
+                                   style="display:none;"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="listComments">
+                    <div id="tab_2" data-value="{{ comments|length }}">
+                        {% for comment in comments %}
+                            <div class="list" id="c{{ comment.id }}"
+                                 style="cursor:default;">
+                                <div class="list-content">
+            <span class="list-icon">
+                <img src="{{ constant('URL') }}public/img/avatar.png" class="pull-left">
+            </span>
+            <span class="list-subtitle">
+                <span class="place-right">{{ comment.date }}</span>
+                {{ comment.name ~ ' - ' ~ comment.office }}
+            </span>
+            <span class="list-title">
+                <span class="place-bottom-right">
+                    <a href="" id="l{{ comment.id }}"><i class="icon-thumbs-up"></i></a> . {{ comment.like }}
+                    <a href="" id="d{{ comment.id }}"><i class="icon-thumbs-down"></i></a> . {{ comment.dislike }}
+                </span>
+                {{ comment.content }}
+            </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,7 +23,7 @@ class ArticlesModel
      *      = 1 : articles da duoc duyet
      *      = 2 : articles chua duyet
      *      = 0: khong rang buoc ve trang thai
-     * @param $condition:
+     * @param $condition :
      *      = 1 : theo thoi gian tu xa den gan
      *      = 2 : theo thoi gian tu gan den xa
      *      = 3 : theo luong like tu it den nhieu
@@ -38,7 +38,9 @@ class ArticlesModel
     {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
         $query->execute();
-        $sql = "SELECT a.*, i.imageUrl, COUNT(ac.id) AS commentTotal FROM articles a
+        $sql = "SELECT a.*, i.imageUrl, COUNT(ac.id) AS commentTotal,
+        ((a.GPlusShare + a.fbshare)*2 + COUNT(ac.id)) AS popular
+        FROM articles a
         LEFT JOIN images i ON a.thumbnailImageId = i.id
         LEFT JOIN articleComments ac ON a.id = ac.articleId
         GROUP BY a.id";
@@ -66,6 +68,9 @@ class ArticlesModel
                 break;
             case 4:
                 $sql .= " ORDER BY `like` DESC ";
+                break;
+            case 5:
+                $sql .= " ORDER BY popular DESC ";
                 break;
             case 0:
                 break;
@@ -97,6 +102,7 @@ class ArticlesModel
         $query->execute();
         return $query->fetch(PDO::FETCH_OBJ);
     }
+
     public function searchArticle($str)
     {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
@@ -105,6 +111,19 @@ class ArticlesModel
         $query = $this->db->prepare($sql);
         $query->execute();
         return json_encode($query->fetchAll());
+    }
+
+    public function addShare($id, $type)
+    {
+        $sql = "UPDATE articles SET ";
+        if ($type == 1)
+            $sql .= "FBShare = FBShare + 1";
+        else
+            $sql .= "GPlusShare = GPlusShare + 1";
+        $sql .= " WHERE id = $id";
+        var_dump($sql);
+        $query = $this->db->prepare($sql);
+        $query->execute();
     }
 
 }

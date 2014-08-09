@@ -210,9 +210,12 @@ class UsersModel extends Controller
     {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
         $query->execute();
-        $sql = "SELECT u.id, fname, lname, phone, email, no, street, ward, dist, city, shortDes, job, imageUrl, dob, office,gender
-        FROM `user` u LEFT JOIN address a ON u.addressId = a.id
-        LEFT JOIN images i ON u.avatarId = i.id WHERE u.`id` = '$id'";
+        $sql = "SELECT u.id, fname, lname, phone, email, ac.cityName AS city, ad.districtName AS district, aw.wardName AS ward, a.street, a.no, shortDes, job, imageUrl, dob, office,gender
+        FROM `user` u LEFT JOIN address a ON u.addressId = a.id LEFT JOIN address_city ac ON a.cityId = ac.id
+        LEFT JOIN address_dist ad ON a.distId = ad.id
+        LEFT JOIN address_ward aw ON a.wardId = aw.id
+        LEFT JOIN images i ON u.avatarId = i.id
+        WHERE u.`id` = '$id'";
         $query = $this->db->query($sql);
         $query->execute();
         return $query->fetch(PDO::FETCH_OBJ);

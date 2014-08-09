@@ -1,0 +1,40 @@
+<script>
+    /* *
+     * objectType: 1- article; 2-place; 3-activity
+     * type: 1 - fbShare; 2- GPlusShare
+     * */
+    function sharer(type,  url) {
+        window.open(url, "Chia sẻ cho cộng đồng", "status = 1, height = 300, width = 600, resizable = 0");
+        if (type == 1)
+            $("#FBShare").html({{ object.FBShare + 1 }});
+        else
+            $("#GPlusShare").html({{ object.GPlusShare + 1 }});
+        $.post('{{ constant('URL') }}untils/addShare',
+                {
+                    objectType: {{ objectType }},
+                    type: type,
+                    id: {{ object.id }}
+                }
+        );
+    }
+</script>
+<span class="place-right">
+                        <span style="font-size: 18px;">
+                        <a target="_blank" title="Chia sẻ bài viết này qua Google+"
+                           href="javascript:sharer(2, {{ '\'https://plus.google.com/share?url=' ~ constant('URL') ~ midUrl ~ object.id ~ '\')' }}">
+                            <i class="icon-google-plus fg-white bg-darkRed"
+                               style="border: 1px solid #93a1a1; border-radius: 50%; padding: 5px">
+                            </i></a>
+                                <sup id="GPlusShare" class="bg-orange fg-white bordered"
+                                     style="padding-left: 5px; padding-right: 5px; border-radius: 30%">{{ object.GPlusShare }}</sup>
+                            </span>
+                        <span style="font-size: 18px;">
+                        <a target="_blank" title="Chia sẻ bài viết này qua FaceBook"
+                           href="javascript:sharer(1, {{ '\'https://www.facebook.com/sharer/sharer.php?u=' ~ constant('URL') ~ midUrl ~ object.id ~ '\')' }}">
+                            <i class="icon-facebook fg-white bg-blue"
+                               style="border: 1px solid #93a1a1; border-radius: 50%; padding: 5px">
+                            </i></a>
+                                <sup id="FBShare" class="bg-orange fg-white bordered"
+                                     style="padding-left: 5px; padding-right: 5px; border-radius: 30%">{{ object.FBShare }}</sup>
+                            </span>
+</span>

@@ -8,10 +8,11 @@
     <div class="grid" style="margin-top: 40px">
         <div class="tab-control" data-role="tab-control">
             <ul class="tabs">
-                <li class="active"><a href="#_tab_profile"><i class="icon-user-2"></i>&nbsp;Hồ sơ thành viên</a></li>
-                <li><a href="#_tab_activities"><i class="icon-calendar"></i>&nbsp;Hoạt động thành viên</a></li>
-                <li><a href="#_tab_places"><i class="icon-location-2"></i>&nbsp;Checked in</a></li>
-                <li><a href="#_tab_articles"><i class="icon-newspaper"></i>&nbsp;Bài viết</a></li>
+                <li {% if tab == 'profile' %}class="active"{% endif %}><a href="#_tab_profile"><i class="icon-user-2"></i>&nbsp;Hồ sơ thành viên</a></li>
+                <li {% if tab == 'activities' %}class="active"{% endif %}><a href="#_tab_activities"><i class="icon-calendar"></i>&nbsp;Hoạt động thành viên</a></li>
+                <li {% if tab == 'check-in' %}class="active"{% endif %}><a href="#_tab_places"><i class="icon-location-2"></i>&nbsp;Checked in</a></li>
+                <li {% if tab == 'articles' %}class="active"{% endif %}><a href="#_tab_articles"><i class="icon-newspaper"></i>&nbsp;Bài viết</a></li>
+                <li {% if tab == 'entries' %}class="active"{% endif %}><a href="#_tab_entries"><i class="icon-blogger"></i>&nbsp;Blog</a></li>
             </ul>
             <style type="text/css" scoped="scoped">
                 .profile-name {
@@ -148,6 +149,7 @@
                 <div class="frame" id="_tab_activities">Frame2</div>
                 <div class="frame" id="_tab_places">Frame3</div>
                 <div class="frame" id="_tab_articles">Frame4</div>
+                <div class="frame" id="_tab_entries">Frame5</div>
             </div>
         </div>
     </div>

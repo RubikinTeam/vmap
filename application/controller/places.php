@@ -33,7 +33,10 @@ class Places extends Controller
         $activities = $places_model->getActivities($id);
 
         $images_model = $this->loadModel('imagesmodel');
+        if ($place->albumId)
         $images = $images_model->getImagesOfAlbum($place->albumId);
+        else
+            $images = null;
 
         $samePlaces = $places_model->getSamePlaces($place->type);
 
@@ -66,6 +69,8 @@ class Places extends Controller
         $comments_model->addComment(2, $id, $comment, $name, $office);
     }
     public function addPlace() {
+        session_start();
+        $creatorId = $_SESSION['id'];
         $name = $_POST['name'];
         $type = $_POST['type'];
         $organization = $_POST['organization'];
@@ -80,15 +85,10 @@ class Places extends Controller
         $email = $_POST['email'];
         $website = $_POST['website'];
         $place_model = $this->loadModel('placesmodel');
-        $address_model = $this->loadModel('locationsmodel');
+        $address_model = $this->loadModel('addressmodel');
         $addressId = $address_model->addAddress($no, $street, $ward, $dist, $city);
-           echo ($place_model->addOnePlace($name, $type, $organization,$presenter,
+           echo ($place_model->addOnePlace($name, $type, $creatorId, $organization,$presenter,
             $phone, $description, $email,$website, $addressId));
-
-
-
-
-
     }
 
 }

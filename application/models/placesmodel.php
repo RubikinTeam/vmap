@@ -20,7 +20,7 @@ class PlacesModel
 
     /**
      * Ham tra ve mot mang cac article theo mot so tieu chuan nhat dinh
-     * @param $condition:
+     * @param $condition :
      *      = 1 : theo thoi gian tu xa den gan
      *      = 2 : theo thoi gian tu gan den xa
      *      = 3 : theo luong like tu it den nhieu
@@ -51,7 +51,7 @@ class PlacesModel
                 $sql .= " ORDER BY `view` DESC ";
                 break;
             case 5:
-                $sql .= " ORDER BY `createDate` ASC ";
+                $sql .= " ORDER BY `createDate` DESC ";
                 break;
             case 6:
                 $sql .= " ORDER BY `commentTotal` DESC, `activitiesTotal` DESC ";
@@ -71,15 +71,17 @@ class PlacesModel
         return $query->fetchAll();
     }
 
-     public function getSamePlaces($type) {
+    public function getSamePlaces($type)
+    {
 
-         $query = $this->db->prepare("SET NAMES 'UTF8'");
-         $query->execute();
-         $sql = "SELECT id, `name` FROM v_place WHERE type = $type";
-         $query = $this->db->prepare($sql);
-         $query->execute();
-         return $query->fetchAll();
-     }
+        $query = $this->db->prepare("SET NAMES 'UTF8'");
+        $query->execute();
+        $sql = "SELECT id, `name` FROM v_place WHERE type = $type";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     /**
      * Tra ve v_place co $id
      * @param $id
@@ -89,14 +91,20 @@ class PlacesModel
     {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
         $query->execute();
-        $sql = "SELECT v.id as placeId, v.name, v.type, v.website, v.description, v.presenter, v.phone, v.email, v.albumId, a.* FROM v_place v  JOIN address a ON v.addressId = a.id WHERE v.id = $id";
+        $sql = "SELECT v.id, v.FBShare, v.GPlusShare, v.name, v.type, v.website, v.description, v.presenter, v.phone, v.email, v.albumId,
+        ac.cityName AS city, ad.districtName AS district, aw.wardName AS ward, a.street, a.no
+        FROM v_place v LEFT JOIN address a ON v.addressId = a.id LEFT JOIN address_city ac ON a.cityId = ac.id
+        LEFT JOIN address_dist ad ON a.distId = ad.id
+        LEFT JOIN address_ward aw ON a.wardId = aw.id
+        WHERE v.id = $id";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetch(PDO::FETCH_OBJ);
     }
 
 
-    public function getActivities($id) {
+    public function getActivities($id)
+    {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
         $query->execute();
         $sql = "SELECT a.id, a.name, a.rating, a.startday, i.imageUrl FROM activities a JOIN images i ON a.thumbnailImageId = i.id WHERE a.id IN (SELECT activityId FROM activity_vplace WHERE vplaceId = $id)";
@@ -115,21 +123,14 @@ class PlacesModel
      * @param $authorId
      * @return int tra ve 1 neu insert thanh cong, nguoc lai tra ve 0
      */
-    public function addOnePlace($name, $type, $organization, $presenter,  $phone, $description, $email, $website, $addressId)
+    public function addOnePlace($name, $type, $creatorId, $organization, $presenter, $phone, $description, $email, $website, $addressId)
     {
-        if (isset($name)&&isset($description)&&isset($phone)&&isset($email)&&isset($addressId))
-        {
-            $sql = "INSERT INTO v_place (`name`, `type`, `organization`, `presenter`, phone, description, email, website,  addressId) VALUES('$name', '$type', '$organization', '$presenter', '$phone', '$description', '$email', '$website', $addressId)";
-            if (!($query = $this->db->prepare($sql)))
-            {
-                return 0;
-            }
-            else {
-                $query->execute();
-                return 1;
-            }
-        }
-        return 0;
+        $sql = "INSERT INTO v_place (`name`, `type`, `creatorId`, `organization`, `presenter`, phone, description, email, website,  addressId) VALUES('$name', '$type', $creatorId, '$organization', '$presenter', '$phone', '$description', '$email', '$website', $addressId)";
+        $query = $this->db->prepare($sql);
+        if ($query->execute())
+            return 1;
+        else
+            return 0;
     }
 
     public function searchPlace($str)
@@ -141,16 +142,28 @@ class PlacesModel
         $query->execute();
         return json_encode($query->fetchAll());
     }
-    public function updateAddress($id, $field, $value) {
+
+    public function updateAddress($id, $field, $value)
+    {
         $query = $this->db->prepare("SET NAMES 'UTF8'");
         $query->execute();
         $sql = "UPDATE address SET $field = '$value' WHERE id = $id";
         $query = $this->db->prepare($sql);
-            if ($query->execute()){
+        if ($query->execute()) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
+    }
+    public function addShare($id, $type) {
+        $sql = "UPDATE v_place SET ";
+        if ($type == 1)
+            $sql .= "FBShare = FBShare + 1";
+        else
+            $sql .= "GPlusShare = GPlusShare + 1";
+        $sql .= " WHERE id = $id";
+        var_dump($sql);
+        $query = $this->db->prepare($sql);
+        $query->execute();
     }
 }

@@ -26,6 +26,8 @@
       <column name="albumId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
       <column name="thumbnailImageId" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12" def="JzAn"/>
       <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="FBShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="GPlusShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
       <column name="joinerNumber" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" remarks="c28gbmd1b2kgdGhhbSBnaWE="/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="FK_38FA41144584665A" unique="false" columns="createrId"/>
@@ -47,7 +49,8 @@
     <table name="activitycomments" schema="" catalog="map_db" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="activityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
-      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="office" sqlType="VARCHAR" length="25" precision="0" nullable="false" jdbcType="12"/>
       <column name="content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
       <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <primary-key name="PRIMARY" columns="id"/>
@@ -56,10 +59,34 @@
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="no" sqlType="VARCHAR" length="10" precision="0" nullable="false" jdbcType="12"/>
       <column name="street" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
-      <column name="ward" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
-      <column name="dist" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
-      <column name="city" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="wardId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="distId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="cityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <index name="cityId" unique="false" columns="cityId"/>
+      <index name="distId" unique="false" columns="distId"/>
+      <index name="wardId" unique="false" columns="wardId"/>
+    </table>
+    <table name="address_city" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="cityName" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="address_dist" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="cityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="districtName" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id,cityId"/>
+      <index name="cityId" unique="false" columns="cityId"/>
+    </table>
+    <table name="address_ward" schema="" catalog="map_db" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="districtId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="cityId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="wardName" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id,districtId,cityId"/>
+      <index name="cityId" unique="false" columns="cityId"/>
+      <index name="districtId" unique="false" columns="districtId"/>
     </table>
     <table name="albumdetail" schema="" catalog="map_db" type="TABLE">
       <column name="albumId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
@@ -68,7 +95,7 @@
       <foreign-key name="FK_albumdetail" columns="albumId" ref-table="imagesalbum" ref-schema="" ref-catalog="map_db" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="articlecomments" schema="" catalog="map_db" type="TABLE">
-      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="content" sqlType="VARCHAR" length="250" precision="0" nullable="false" jdbcType="12"/>
       <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
@@ -82,6 +109,7 @@
       <column name="title" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
       <column name="titleASCII" sqlType="VARCHAR" length="200" precision="0" nullable="false" jdbcType="12"/>
       <column name="authorId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="tag" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12" def="J3Rpbmggbmd1eWVuLCB0aGFuaCBuaWVuLCB2aSBjb25nIGRvbmcsJw=="/>
       <column name="sumary" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
       <column name="details" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
       <column name="source" sqlType="VARCHAR" length="500" precision="0" nullable="false" jdbcType="12"/>
@@ -91,6 +119,8 @@
       <column name="dislike" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
       <column name="thumbnailImageId" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="FBShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="GPlusShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="FK_author" unique="false" columns="authorId"/>
       <index name="thumbnailImageId" unique="false" columns="thumbnailImageId"/>
@@ -129,10 +159,11 @@
     </table>
     <table name="placecomments" schema="" catalog="map_db" type="TABLE">
       <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="time" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <column name="date" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <column name="placeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
-      <column name="userId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
       <column name="content" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="office" sqlType="VARCHAR" length="25" precision="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="takepart" schema="" catalog="map_db" type="TABLE">
@@ -192,6 +223,8 @@
       <column name="website" sqlType="VARCHAR" length="30" precision="0" nullable="false" jdbcType="12"/>
       <column name="rating" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="view" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="FBShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="GPlusShare" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
       <column name="addressId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="locationId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="creatorId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>

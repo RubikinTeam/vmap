@@ -1,106 +1,165 @@
 <fieldset>
-    <legend><strong>Thêm địa điểm mới</strong></legend>
-    <label>Tên cơ sở</label>
+        <legend><strong>Thêm địa điểm mới</strong></legend>
+        <label>Tên cơ sở</label>
 
-    <div class="input-control text" data-role="input-control">
-        <input type="text" name="name" id="name" tabindex="1" autofocus="" required>
-        <button class="btn-clear"></button>
-    </div>
-    <label>Người đại diện</label>
-
-    <div class="input-control text" data-role="input-control">
-        <input type="text" name="lname" id="presenter" tabindex="2" required>
-        <button class="btn-clear"></button>
-    </div>
-
-    <label>Loại</label>
-
-    <div class="input-control" data-role="input-control">
-        <select id="type">
-            <option value="1">Mái ấm, nhà mở</option>
-            <option value="2">Trung tâm bảo trợ, làng SOS</option>
-            <option value="3">Chùa/Nhà thờ</option>
-            <option value="4">Trường học / Lớp học</option>
-            <option value="5">Quán ăn / Bếp ăn</option>
-            <option value="6">Công cộng</option>
-            <option value="7">Tư nhân / Tổ chức</option>
-            <option value="8">Khác:</option>
-        </select>
-    </div>
-    <label>Mô tả</label>
-
-    <div class="input-control textarea" data-role="input-control">
-        <textarea id="description"></textarea>
-    </div>
-    <label>Tổ chức chủ quản, bảo trợ: </label>
-
-    <div class="input-control text" data-role="input-control">
-        <input type="text" id="organization" tabindex="3" required>
-        <button class="btn-clear"></button>
-    </div>
-    <label>Địa chỉ: </label>
-
-    <div class="input-control text" data-role="input-control">
-        <label>Số:</label><input type="text" id="no" tabindex="3" required>
-        <label>Đường:</label><input type="text" id="street" tabindex="3" required>
-        <label>Phường/Xã:</label><input type="text" id="ward" tabindex="3" required>
-        <label>Quận/Huyện:</label><input type="text" id="dist" tabindex="3" required>
-        <label>Tỉnh/TP:</label><input type="text" id="city" tabindex="3" required>
-    </div>
-    <label>Điện thoại </label>
-
-    <div class="input-control text" data-role="input-control">
-        <input type="text" tabindex="4" id="phone">
-    </div>
-    <label>Email </label>
-
-    <div class="input-control text" data-role="input-control">
-        <input type="email" tabindex="4" name="email" id="email">
-    </div>
-    <label>Website </label>
-
-    <div class="input-control text" data-role="input-control">
-        <input type="text" tabindex="4" name="website" id="website">
-    </div>
-    <div class="row">
-        <div class="span2">
-            <button class="button success" id="submit">Thêm địa điểm</button>
-            <div id="loadImage" style="width: 30%; height: 30%">
-            </div>
+        <div class="input-control text" data-role="input-control">
+            <input type="text" name="name" id="name" tabindex="1" autofocus="" required>
+            <button class="btn-clear"></button>
         </div>
-        <div class="span2"><input type="reset" value="Xóa"></div>
-    </div>
+        <label>Người đại diện</label>
+
+        <div class="input-control text" data-role="input-control">
+            <input type="text" name="lname" id="presenter" tabindex="2" required>
+            <button class="btn-clear"></button>
+        </div>
+
+        <label>Loại</label>
+
+        <div class="input-control" data-role="input-control">
+            <select id="type">
+                <option value="1">Mái ấm, nhà mở</option>
+                <option value="2">Trung tâm bảo trợ, làng SOS</option>
+                <option value="3">Chùa/Nhà thờ</option>
+                <option value="4">Trường học / Lớp học</option>
+                <option value="5">Quán ăn / Bếp ăn</option>
+                <option value="6">Công cộng</option>
+                <option value="7">Tư nhân / Tổ chức</option>
+                <option value="8">Khác:</option>
+            </select>
+        </div>
+        <label>Mô tả</label>
+
+        <div class="input-control textarea" data-role="input-control">
+            <textarea id="description"></textarea>
+        </div>
+        <label>Tổ chức chủ quản, bảo trợ: </label>
+
+        <div class="input-control text" data-role="input-control">
+            <input type="text" id="organization" tabindex="3" required>
+            <button class="btn-clear"></button>
+        </div>
+        <label>Địa chỉ: </label>
+        <style>
+            select {
+                width: 150px;
+            }
+        </style>
+        <p>
+            <strong>Tỉnh/TP:</strong> <select id="city" tabindex="3">
+                <option selected>Chọn tỉnh/TP</option>
+            </select>&nbsp;&nbsp;
+            <strong>Quận/Huyện:</strong> <select id="dist" tabindex="3">
+                <option selected>Chọn Quận/Huyện</option>
+            </select>
+        </p>
+        <p>
+            <strong>Phường/Xã:</strong> <select id="ward" tabindex="3">
+                <option selected>Chọn Phường/Xã</option>
+            </select>&nbsp;&nbsp;
+            <strong>Số nhà:</strong> <input type="text" id="no" size="5" required="true">&nbsp;&nbsp;
+            <strong>Đường:</strong> <input type="text" size="10" id="street" required="true">
+        </p>
+        <label>Điện thoại </label>
+
+        <div class="input-control text" data-role="input-control">
+            <input type="text" tabindex="4" id="phone">
+        </div>
+        <label>Email </label>
+
+        <div class="input-control text" data-role="input-control">
+            <input type="email" tabindex="4" name="email" id="email">
+        </div>
+        <label>Website </label>
+
+        <div class="input-control text" data-role="input-control">
+            <input type="text" tabindex="4" name="website" id="website">
+        </div>
+        <div class="row">
+            <div class="span2">
+                <button class="button success" id="submit">Thêm địa điểm</button>
+                <div id="loadImage" style="width: 30%; height: 30%">
+                </div>
+            </div>
+            <div class="span2"><input type="reset" id="reset" value="Xóa"></div>
+        </div>
 </fieldset>
 <script>
     $(document).ready(function () {
+        $.post("{{ constant('URL')}}address/getAllCities").done(
+                function (data) {
+                    data = JSON.parse(data);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#city").append('<option value = "' + data[i].id + '">' + data[i].cityName + '</option>');
+                    }
+                }
+        );
+        $("#city").on('change', function () {
+            $("#dist").html('');
+            $.post("{{ constant('URL')}}address/getAllDist", {cityId: $("#city").val()}).done(
+                    function (data) {
+                        data = JSON.parse(data);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#dist").append('<option value = "' + data[i].id + '">' + data[i].districtName + '</option>');
+                        }
+                    }
+            );
+        });
+        $("#dist").on('change', function () {
+            $("#ward").html('');
+            $.post("{{ constant('URL')}}address/getAllWard", {cityId: $("#city").val(), distId: $("#dist").val()}).done(
+                    function (data) {
+                        data = JSON.parse(data);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#ward").append('<option value = "' + data[i].id + '">' + data[i].wardName + '</option>');
+                        }
+                    }
+            );
+        });
+        function formReset() {
+            $(".text > input").val('');
+            $(".textarea > textarea").val('');
+        };
+        $("#reset").on('click', function() {
+            formReset();
+        });
         $("#submit").on('click', function () {
-            $("#loadImage").html('<img src="{{ constant('URL')}}public/img/loading2.gif">');
-            $.post("{{ constant('URL')}}places/addPlace",
-                    {
-                        name: $("#name").val(),
-                        type: $("#type").val(),
-                        organization: $("#organization").val(),
-                        presenter: $("#presenter").val(),
-                        no: $("#no").val(),
-                        street: $("#street").val(),
-                        ward: $("#ward").val(),
-                        dist: $("#dist").val(),
-                        city: $("#city").val(),
-                        dist: $("#dist").val(),
-                        phone: $("#phone").val(),
-                        email: $("#email").val(),
-                        website: $("#website").val(),
-                        description: $("#description").val()
-                    }, function (data, status) {
-                        if (status == "success" && data == "1") {
-                            $("#main-content").html('<h3>Cập nhật thành công</h3>');
-                        }
-                        else {
-                            $("#main-content").html('<h3>Cập nhật Thành công');
+            var sentData = {
+                name: $("#name").val(),
+                type: $("#type").val(),
+                organization: $("#organization").val(),
+                presenter: $("#presenter").val(),
+                no: $("#no").val(),
+                street: $("#street").val(),
+                ward: $("#ward").val(),
+                dist: $("#dist").val(),
+                city: $("#city").val(),
+                dist: $("#dist").val(),
+                phone: $("#phone").val(),
+                email: $("#email").val(),
+                website: $("#website").val(),
+                description: $("#description").val()
+            };
+            var dataValidate = true;
+            for (var element in sentData) {
+                if (!sentData[element].length) {
+                    $.Notify({style: {background: 'red', color: 'white'}, content: "Vui lòng nhập đủ thông tin"});
+                    dataValidate = false;
+                    break;
 
-                        }
-
-                    }, "text");
+                }
+            }
+            if (dataValidate) {
+                $.post("{{ constant('URL')}}places/addPlace", sentData
+                        , function (data) {
+                            if (data) {
+                                $.Notify({style: {background: 'green', color: 'white'}, content: "Thêm địa điểm thành công"});
+                                formReset();
+                            }
+                            else {
+                                $.Notify({style: {background: 'red', color: 'white'}, content: "Có lỗi xảy ra"});
+                            }
+                        });
+            }
         });
     })
 

@@ -28,20 +28,4 @@ class LocationsModel
         $query->execute();
         return json_encode($query->fetchAll());
     }
-    public function addAddress($no, $street, $ward, $dist, $city) {
-        $query = $this->db->prepare("SET NAMES 'UTF8'");
-        $query->execute();
-        $sql = "INSERT INTO  address(no, street, ward, dist, city) VALUES('$no', '$street', '$ward', '$dist', '$city')";
-        $query = $this->db->prepare($sql);
-        if ($query->execute()) {
-            $query = $this->db->prepare('SELECT MAX(id) AS addressId FROM address');
-            $query->execute();
-            $result = ($query->fetch(PDO::FETCH_OBJ));
-            var_dump((string)$result->addressId);
-            return (string)$result->addressId;
-        }
-        else {
-            return 0;
-        }
-    }
 }
